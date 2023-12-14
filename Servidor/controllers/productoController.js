@@ -1,8 +1,8 @@
-const Producto = require("../models/Producto");
+const Producto = require("../models/Usuario");
 
+// Crear un nuevo producto
 exports.crearProducto = async (req, res) => {
     try {
-        // Crear un nuevo producto
         producto = new Producto(req.body);
         await producto.save();
         res.send(producto);
@@ -12,7 +12,7 @@ exports.crearProducto = async (req, res) => {
         res.status(500).send('Hubo un error');
     }
 }
-
+// obtiene todos los productos de la base de datos
 exports.obtenerProductos = async (req, res) => {
     try {
         const productos = await Producto.find();
@@ -23,7 +23,7 @@ exports.obtenerProductos = async (req, res) => {
         res.status(500).send('Hubo un error');
     }
 }
-
+// actualiza un producto por su id
 exports.actualizarProducto = async (req, res) => {
     try {
         const { nombre, categoria, ubicacion, duracion } = req.body;
@@ -46,7 +46,7 @@ exports.actualizarProducto = async (req, res) => {
         res.status(500).send('Hubo un error');
     }
 }
-
+// elimina un producto por su id
 exports.eliminarProducto = async (req, res) => {
     try {
         let producto = await Producto.findById(req.params.id);
