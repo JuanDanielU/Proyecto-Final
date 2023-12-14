@@ -1,21 +1,22 @@
 const mongoose = require('mongoose');
 
-const ProductoSchema = mongoose.Schema({
+const UsuarioSchema = mongoose.Schema({
     nombre: {
         type: String,
         required: true,
     },
-    categoria: {
-        type: String,
+    suscriptores: {
+        type: Number,
         required: true,
+        default: 0,
     },
     ubicacion: {
         type: String,
         required: true,
     },
-    duracion: {
+    videos: {
         type: String,
-        required: true,
+        required: false,
     },
     fechaCreacion: {
         type: Date,
@@ -23,4 +24,4 @@ const ProductoSchema = mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('Producto', ProductoSchema);
+module.exports = mongoose.model('Usuario', UsuarioSchema);
