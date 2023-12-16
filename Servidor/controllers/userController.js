@@ -54,7 +54,6 @@ exports.deleteUser = async (req, res) => {
         if (!user) {
             res.status(404).json({ msg: 'User not found' });
         }
-        // await Producto.findOneAndRemove({ _id: req.params.id });
         res.json({msg: 'User deleted successfully'});
 
     } catch (error) {
