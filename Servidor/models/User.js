@@ -18,6 +18,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    history: {
+        type: String,
+        required: false,
+    },
     videos: {
         type: String,
         required: false,
