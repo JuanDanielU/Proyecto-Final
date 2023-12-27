@@ -9,7 +9,7 @@ const VideoSchema = mongoose.Schema({
         type: String,
         require: false,
     },
-    timelength: {
+    length: {
         type: String,
         required: true,
     },
