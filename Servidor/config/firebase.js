@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyBbSSAPy_imYqBPP9I0_vywkJ5I5scWHxY",
   authDomain: "watchem-42dca.firebaseapp.com",
   databaseURL: "https://watchem-42dca-default-rtdb.firebaseio.com",
