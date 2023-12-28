@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { VideoService } from '../services/Video.service';
+import { VideoService } from '../../services/Video.service';
 import { error } from 'console';
 
 @Component({
