@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "videohub-71345": {
+      "hosting": {
+        "videohub": [
+          "videohub-71345"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "videohub-71345"
+  }
+}

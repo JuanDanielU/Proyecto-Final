@@ -1,0 +1,11 @@
+{
+  "hosting": [
+    {
+      "target": "videohub",
+      "source": ".",
+      "frameworksBackend": {
+        "region": "us-central1"
+      }
+    }
+  ]
+}
