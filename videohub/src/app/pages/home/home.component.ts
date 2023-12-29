@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+  hide = true;
+
   private _router = inject(Router);
 
   private authservice = inject(AuthService);
