@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import {
@@ -42,7 +41,6 @@ interface SignupForm {
     ButtonProviders,
   ],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.scss'
 })
 
 export class SignupComponent {
@@ -71,13 +69,6 @@ export class SignupComponent {
   Signup(): void {
     if (this.form.invalid) return;
       console.log(this.form.value);
-  }
-
-  passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    if (control.value !== this.form.get('password')?.value) {
-      return { 'passwordMismatch': true };
-    }
-    return null;
   }
 
   private authService = inject(AuthService);
@@ -112,7 +103,7 @@ export class SignupComponent {
       const snackBarRef = this.openSnackBar();
 
       snackBarRef.afterDismissed().subscribe(() => {
-        this._router.navigateByUrl('/');
+        this._router.navigateByUrl('');
       });
     } catch (error) {
       console.error(error);

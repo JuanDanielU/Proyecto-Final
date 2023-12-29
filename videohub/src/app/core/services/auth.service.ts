@@ -2,7 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import {
   Auth,
   AuthProvider,
-  GithubAuthProvider,
   GoogleAuthProvider,
   UserCredential,
   authState,
@@ -45,7 +44,6 @@ export class AuthService {
   }
 
   // providers
-
   signInWithGoogleProvider(): Promise<UserCredential> {
     const provider = new GoogleAuthProvider();
 
