@@ -1,4 +1,19 @@
+:root {
+  --green: #69f0ae;
+  --header-text: #303030;
+}
+
 mat-toolbar {
   display: flex;
   justify-content: space-between;
+}
+
+span {
+  font-size: 36px;
+  font-weight: bolder;
+}
+
+.signUp {
+  color: var(--green);
+  background-color: black;
 }

@@ -12,11 +12,26 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  hide = true;
+  hide = false;
 
   private _router = inject(Router);
 
   private authservice = inject(AuthService);
+
+  ngOnInit() {
+    this.authservice.authState$.subscribe((user) => {
+      if (user) {
+        this.hide = true;
+      }
+      else {
+        this.hide = false;
+      }
+    });
+  }
+
+  async signUp(): Promise<void> {
+    this._router.navigateByUrl('/auth/signup');
+  }
 
   async logOut(): Promise<void> {
     try {

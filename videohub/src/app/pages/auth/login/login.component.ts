@@ -96,7 +96,7 @@ export class LoginComponent {
 
   openSnackBar() {
     return this._snackBar.open('Succesfully Log in 😀', 'Close', {
-      duration: 2500,
+      duration: 2000,
       verticalPosition: 'top',
       horizontalPosition: 'end',
     });

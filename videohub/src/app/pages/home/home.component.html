@@ -1,7 +1,7 @@
 <mat-toolbar color="accent">
   <span>VideoHub</span>
   <div>
-    <button mat-raised-button (click)="logOut()">Log out</button>
-    <button mat-raised-button (click)="logOut()">Log out</button>
+    <button type="button" class="signUp" [style.display]="hide ? 'none' : '' " mat-raised-button (click)="signUp()">Sign up</button>
+    <button [style.display]="hide ? '' : 'none' " mat-raised-button (click)="logOut()">Log out</button>
   </div>
 </mat-toolbar>

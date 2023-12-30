@@ -1,7 +1,6 @@
 :root {
-  --background: rgb(0, 0, 0);
-  ----green: #45d8b4;
-  --dark-text: rgba(12, 42, 42);
+  --background: #000;
+  --green: #69f0ae;
   --text: #fff;
 }
 
@@ -39,7 +38,7 @@ body {
   mat-form-field {
     width: 100%;
     margin-bottom: 5px;
-    color: var(----green);
+    color: var(--green);
   }
 
   .mdc-button {
@@ -59,7 +58,7 @@ body {
       margin-top: 30px;
 
       a {
-        color: var(----green);
+        color: var(--green);
         text-decoration: underline;
         cursor: pointer;
       }

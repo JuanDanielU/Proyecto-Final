@@ -112,7 +112,7 @@ export class SignupComponent {
 
   openSnackBar() {
     return this._snackBar.open('Succesfully Sign up 😀', 'Close', {
-      duration: 2500,
+      duration: 2000,
       verticalPosition: 'top',
       horizontalPosition: 'end',
     });
