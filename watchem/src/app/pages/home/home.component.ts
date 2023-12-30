@@ -2,18 +2,20 @@ import { Component, inject } from '@angular/core';
 import  { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule} from '@angular/material/menu';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatButtonModule, MatToolbarModule, MatIconModule],
+  imports: [MatButtonModule, MatToolbarModule, MatIconModule, MatMenuModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
   hide = false;
+  userName: string = "";
 
   private _router = inject(Router);
 
@@ -23,6 +25,7 @@ export class HomeComponent {
     this.authservice.authState$.subscribe((user) => {
       if (user) {
         this.hide = true;
+        this.userName = user?.displayName ?? '';
       }
       else {
         this.hide = false;

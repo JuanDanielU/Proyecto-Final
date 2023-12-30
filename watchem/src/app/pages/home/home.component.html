@@ -4,7 +4,7 @@
     <mat-icon>upload</mat-icon>
   </button>
   <div class="SL-buttons">
-    <button aria-label="log In" type="button" class="logIn" [style.display]="hide ? 'none' : '' " mat-raised-button color="accent" (click)="logIn()">Log in</button>
-    <button aria-label="log Out" type="button" class="logOut" [style.display]="hide ? '' : 'none' " mat-raised-button color="accent" (click)="logOut()">Log out</button>
+    <button aria-label="log In" type="button" class="logIn" [style.display]="hide ? 'none' : '' " mat-raised-button color="accent" (click)="logIn()">Login</button>
+    <button aria-label="log Out" type="button" class="logOut" [style.display]="hide ? '' : 'none' " mat-raised-button (click)="logOut()"  color="accent">Log Out</button>
   </div>
 </mat-toolbar>
