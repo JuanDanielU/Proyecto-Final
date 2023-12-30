@@ -1,6 +1,5 @@
 :root {
   --green: #69f0ae;
-  --header-text: #303030;
 }
 
 mat-toolbar {
@@ -21,26 +20,28 @@ span {
 }
 
 .logIn {
-  color: var(--green);
-  background-color: black;
+  font-weight: bold;
+  color: black;
+  border: 2px solid black;
   transition: color 0.5s ease, background-color 0.5s ease;
 }
 
 .logIn:hover {
   font-weight: bolder;
-  color: black;
-  background-color: var(--green);
+  color: var(--green);
+  background-color: black;
 }
 
 .logOut {
-  color: var(--green);
-  background-color: black;
+  font-weight: bold;
+  color: black;
+  border: 2px solid black;
   transition: color 0.5s ease, background-color 0.5s ease;
 }
 
 .logOut:hover {
-  font-weight: bold;
-  color: black;
+  font-weight: bolder;
+  color: white;
   background-color: red;
 }
 

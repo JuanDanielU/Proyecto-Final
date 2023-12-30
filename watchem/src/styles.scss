@@ -23,11 +23,16 @@ body {
   min-height: 100vh;
 
   h1 {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--green);
   }
 
   &__container {
     width: 100%;
+    background-color: black;
+    border-radius: 5px;
+    padding: 20px 30px;
     max-width: 400px;
   }
 
@@ -43,6 +48,16 @@ body {
 
   .mdc-button {
     width: 100%;
+    color: var(--green);
+    background-color: black;
+    border: 1px solid var(--green);
+    transition: color 0.5s ease, background-color 0.5s ease;
+  }
+
+  .mdc-button:hover {
+    font-weight: bold;
+    color: black;
+    background-color: var(--green);
   }
 
   .small-text {
@@ -55,7 +70,7 @@ body {
     }
 
     &.login-redirect {
-      margin-top: 30px;
+      margin-top: 20px;
 
       a {
         color: var(--green);
