@@ -1,7 +1,10 @@
 <mat-toolbar color="accent">
   <span>VideoHub</span>
-  <div>
-    <button type="button" class="signUp" [style.display]="hide ? 'none' : '' " mat-raised-button (click)="signUp()">Sign up</button>
-    <button type="button" class="logOut" [style.display]="hide ? '' : 'none' " mat-raised-button (click)="logOut()">Log out</button>
+  <button class="upload" [style.display]="hide ? '' : 'none' " mat-icon-button class="upload">
+    <mat-icon>upload</mat-icon>
+  </button>
+  <div class="SL-buttons">
+    <button aria-label="log In" type="button" class="logIn" [style.display]="hide ? 'none' : '' " mat-raised-button (click)="logIn()">Login</button>
+    <button aria-label="log Out" type="button" class="logOut" [style.display]="hide ? '' : 'none' " mat-raised-button (click)="logOut()">Log out</button>
   </div>
 </mat-toolbar>

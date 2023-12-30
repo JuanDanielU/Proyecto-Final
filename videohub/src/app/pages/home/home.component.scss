@@ -5,7 +5,6 @@
 
 mat-toolbar {
   display: flex;
-  justify-content: space-between;
 }
 
 span {
@@ -13,12 +12,44 @@ span {
   font-weight: bolder;
 }
 
-.signUp {
+.upload {
+  margin-left: 10px;
+}
+
+.SL-buttons {
+  margin-left: auto;
+}
+
+.logIn {
   color: var(--green);
   background-color: black;
+  transition: color 0.5s ease, background-color 0.5s ease;
+}
+
+.logIn:hover {
+  font-weight: bolder;
+  color: black;
+  background-color: var(--green);
 }
 
 .logOut {
+  color: var(--green);
+  background-color: black;
+  transition: color 0.5s ease, background-color 0.5s ease;
+}
+
+.logOut:hover {
+  font-weight: bold;
+  color: black;
+  background-color: red;
+}
+
+.upload {
+  margin-right: 15px;
+  transition: color 0.5s ease, background-color 0.5s ease;
+}
+
+.upload:hover {
   color: var(--green);
   background-color: black;
 }

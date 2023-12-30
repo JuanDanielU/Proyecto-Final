@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import  { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
@@ -7,9 +8,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatButtonModule, MatToolbarModule],
+  imports: [MatButtonModule, MatToolbarModule, MatIconModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent {
   hide = false;
@@ -29,8 +30,8 @@ export class HomeComponent {
     });
   }
 
-  async signUp(): Promise<void> {
-    this._router.navigateByUrl('/auth/signup');
+  async logIn(): Promise<void> {
+    this._router.navigateByUrl('/auth/login');
   }
 
   async logOut(): Promise<void> {
