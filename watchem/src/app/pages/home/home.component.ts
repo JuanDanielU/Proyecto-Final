@@ -30,6 +30,10 @@ export class HomeComponent {
     });
   }
 
+  gotoUpload(): void {
+    this._router.navigateByUrl('/upload');
+  }
+
   async logIn(): Promise<void> {
     this._router.navigateByUrl('/auth/login');
   }
