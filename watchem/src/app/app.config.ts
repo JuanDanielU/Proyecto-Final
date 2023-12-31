@@ -1,6 +1,6 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
+import { AuthService } from './core/services/auth.service';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -24,6 +24,7 @@ export const appConfig: ApplicationConfig = {
             color: 'accent',
         },
     },
-    provideAnimations()
+    provideAnimations(),
+    AuthService,
 ],
 };

@@ -41,6 +41,7 @@ interface SignupForm {
     ButtonProviders,
   ],
   templateUrl: './signup.component.html',
+  styleUrls: ['../login/login.component.scss'],
 })
 
 export class SignupComponent {

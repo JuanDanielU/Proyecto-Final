@@ -17,7 +17,13 @@ import {
 @Component({
   selector: 'app-upload-video',
   standalone: true,
-  imports: [ MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatSelectModule ],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatSelectModule,
+  ],
   templateUrl: './upload-video.component.html',
   styleUrl: './upload-video.component.scss'
 })
