@@ -1,0 +1,32 @@
+<form formGroup="form" (ngSubmit)="uploadVideo()">
+  <div>
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input title="names" matInput formControlName="names" />
+      <mat-error>This field is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea aria-label="descripcion" matInput formControlName="descripcion"></textarea>
+      <mat-error>This field is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Tag</mat-label>
+      <input title="categoria" matInput formControlName="categoria" />
+    </mat-form-field>
+  </div>
+
+  <div>
+    <input aria-label="chooseVideo" type="file" (change)="chooseVideo($event)" />
+    <br />
+    <button type="button" mat-raised-button (click)="uploadVideo()">Subir video</button>
+  </div>
+</form>
+
+
