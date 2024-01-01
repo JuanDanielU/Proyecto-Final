@@ -27,6 +27,7 @@ export class AppComponent {
 
   hideLogged = false;
   hideUnlogged = true;
+  hideToolbar = false;
 
   userName: string = "";
 
@@ -44,14 +45,26 @@ export class AppComponent {
         this.hideUnlogged= false;
         this.hideLogged = true;
       }
-      else {
+      else{
         this.hideUnlogged = true;
         this.hideLogged = false;
       }
     });
 
-    if (this._router.url === '/auth/login' || this._router.url === '/auth/signup') {
-      this.hideLogged = true;
+    if(this._router.url === '/auth/login' || this._router.url === '/auth/signup') {
+      this.hideToolbar = true;
+    }
+    else {
+      this.hideToolbar = false;
+    }
+  }
+
+  ngOnChanges() {
+    if(this._router.url === '/auth/login' || this._router.url === '/auth/signup') {
+      this.hideToolbar = true;
+    }
+    else {
+      this.hideToolbar = false;
     }
   }
 

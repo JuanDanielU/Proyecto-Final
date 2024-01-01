@@ -1,5 +1,5 @@
-<mat-toolbar color="accent">
-  <a href="/">WatchEm'</a>
+<mat-toolbar [style.display]="hideToolbar ? 'none' : '' " color="accent">
+  <a href="">WatchEm'</a>
   <button class="upload" [style.display]="hideUnlogged ? 'none' : '' " mat-icon-button (click)="gotoUpload()">
     <mat-icon>upload</mat-icon>
   </button>
