@@ -6,9 +6,11 @@ mat-toolbar {
   display: flex;
 }
 
-span {
+a {
   font-size: 36px;
+  color: black;
   font-weight: bolder;
+  text-decoration: none;
 }
 
 .upload {

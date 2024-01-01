@@ -25,8 +25,9 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
   title = 'videohub';
 
-  hide = false;
-  hideLogin = false;
+  hideLogged = false;
+  hideUnlogged = true;
+
   userName: string = "";
 
   private _router = inject(Router);
@@ -36,20 +37,22 @@ export class AppComponent {
   gotoHome(): void {
     this._router.navigateByUrl('/home');
   }
-  
+
   ngOnInit() {
-    if (this._router.url === '/auth/login' || this._router.url === '/auth/signup') {
-      this.hideLogin = true;
-    }
     this.authservice.authState$.subscribe((user) => {
       if (user) {
-        this.hide = true;
-        this.userName = user?.displayName ?? '';
+        this.hideUnlogged= false;
+        this.hideLogged = true;
       }
       else {
-        this.hide = false;
+        this.hideUnlogged = true;
+        this.hideLogged = false;
       }
     });
+
+    if (this._router.url === '/auth/login' || this._router.url === '/auth/signup') {
+      this.hideLogged = true;
+    }
   }
 
   gotoUpload(): void {
@@ -58,7 +61,7 @@ export class AppComponent {
 
   async logIn(): Promise<void> {
     this._router.navigateByUrl('/auth/login');
-    this.hideLogin = true;
+    this.hideLogged = true;
   }
 
   async logOut(): Promise<void> {
