@@ -1,0 +1,69 @@
+.form {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+
+  h1 {
+    margin-bottom: 20px;
+    color: var(--green);
+  }
+
+  &__container {
+    width: 100%;
+    background-color: black;
+    border-radius: 5px;
+    padding: 20px 30px;
+    max-width: 400px;
+  }
+
+  video {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  hr {
+    margin: 30px 0;
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 5px;
+    color: var(--green);
+  }
+
+  .mdc-button {
+    width: 100%;
+    color: var(--green);
+    background-color: black;
+    border: 1px solid var(--green);
+    transition: color 0.5s ease, background-color 0.5s ease;
+  }
+
+  .mdc-button:hover {
+    font-weight: bold;
+    color: black;
+    background-color: var(--green);
+  }
+
+  .small-text {
+    font-size: 14px;
+    display: block;
+    text-align: center;
+
+    &.providers {
+      margin-bottom: 30px;
+    }
+
+    &.login-redirect {
+      margin-top: 20px;
+
+      a {
+        color: var(--green);
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+}

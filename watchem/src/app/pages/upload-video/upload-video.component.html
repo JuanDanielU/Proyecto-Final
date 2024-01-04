@@ -1,32 +1,30 @@
-<form formGroup="form" (ngSubmit)="uploadVideo()">
-  <div>
-    <mat-form-field>
-      <mat-label>Title</mat-label>
-      <input title="names" matInput formControlName="names" />
-      <mat-error>This field is required</mat-error>
-    </mat-form-field>
+<div class="form">
+  <div class="form__container">
+    <h1>Upload video</h1>
+    <form [formGroup]="form" (ngSubmit)="uploadVideo()">
+      <div>
+        <mat-form-field>
+          <mat-label>Title</mat-label>
+          <input title="title" matInput formControlName="title" />
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea aria-label="description" matInput formControlName="description"></textarea>
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <input aria-label="chooseVideo" type="file" (change)="chooseVideo($event)" />
+        <br />
+        <video id="videoThumbnail" [style.display]="hide ? 'none' : '' " src="#" alt="Video Thumbnail"></video>
+        <br />
+        <button type="submit" mat-raised-button>Subir video</button>
+      </div>
+    </form>
   </div>
-
-  <div>
-    <mat-form-field>
-      <mat-label>Description</mat-label>
-      <textarea aria-label="descripcion" matInput formControlName="descripcion"></textarea>
-      <mat-error>This field is required</mat-error>
-    </mat-form-field>
-  </div>
-
-  <div>
-    <mat-form-field>
-      <mat-label>Tag</mat-label>
-      <input title="categoria" matInput formControlName="categoria" />
-    </mat-form-field>
-  </div>
-
-  <div>
-    <input aria-label="chooseVideo" type="file" (change)="chooseVideo($event)" />
-    <br />
-    <button type="button" mat-raised-button (click)="uploadVideo()">Subir video</button>
-  </div>
-</form>
-
-
+</div>
