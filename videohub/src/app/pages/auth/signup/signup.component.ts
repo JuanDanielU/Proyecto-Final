@@ -19,6 +19,8 @@ import { RouterModule } from '@angular/router';
 import { AuthService, Credential } from '../../../core/services/auth.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ButtonProviders } from '../components/button-providers/button-providers.component';
+import { UserService } from '../../../core/services/user.service';
+import { User } from '../../../models/user';
 
 interface SignupForm {
   names: FormControl<string>;
@@ -76,6 +78,7 @@ export class SignupComponent {
   private authService = inject(AuthService);
   private _router = inject(Router);
   private _snackBar = inject(MatSnackBar);
+  private _userService = inject(UserService);
 
   get isEmailValid(): string | boolean {
     const control = this.form.get('email');
@@ -101,11 +104,24 @@ export class SignupComponent {
 
     try {
       await this.authService.signUpWithEmailAndPassword(credential);
+      const result = await this.authService.signUpWithEmailAndPassword(credential);
+      if (result) {
+        const userData: User = {
+          _id: result.user.uid,
+          email: result.user.email!,
+          name: result.user.displayName!,
+          videos: [],
+          createdAt: new Date(result.user.metadata.creationTime!),
+          updatedAt: null,
+          photoURL: result.user.photoURL,
+        };
+        await this._userService.createUser(userData).toPromise();
+      }
 
       const snackBarRef = this.openSnackBar();
 
       snackBarRef.afterDismissed().subscribe(() => {
-        this._router.navigateByUrl('');
+        this._router.navigateByUrl('/');
       });
     } catch (error) {
       console.error(error);

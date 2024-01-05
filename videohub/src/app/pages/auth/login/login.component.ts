@@ -43,11 +43,8 @@ export class LoginComponent {
   hide = true;
 
   formBuilder = inject(FormBuilder);
-
   private authService = inject(AuthService);
-
   private router = inject(Router);
-
   private _snackBar = inject(MatSnackBar);
 
   form: FormGroup<LogInForm> = this.formBuilder.group({
@@ -92,6 +89,11 @@ export class LoginComponent {
       });
     } catch (error) {
       console.error(error);
+      this._snackBar.open('Invalid Credentials!', 'Close', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'end',
+      });
     }
   }
 

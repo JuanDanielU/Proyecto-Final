@@ -9,9 +9,13 @@ const VideoSchema = mongoose.Schema({
         type:String,
         required: true,
     },
-    uploadDate: {
+    uploadedAt: {
         type: Date,
         default: Date.now(),
+    },
+    updatedAt: {
+        type: Date,
+        default: null,
     },
     views: {
         type: Number,

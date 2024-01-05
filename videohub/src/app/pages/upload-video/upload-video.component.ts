@@ -5,6 +5,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule} from '@angular/material/select';
+import { VideoService } from '../../core/services/video.service';
+import { Video } from '../../models/video';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { UserService } from '../../core/services/user.service';
+import { User } from '../../models/user';
+import { AuthService } from '../../core/services/auth.service';
 
 import {
   FormBuilder,
@@ -29,6 +36,7 @@ interface VideoForm {
     MatButtonModule,
     MatSelectModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
   ],
   templateUrl: './upload-video.component.html',
   styleUrl: './upload-video.component.scss'
@@ -36,6 +44,11 @@ interface VideoForm {
 export class UploadVideoComponent {
   hide = true;
   formBuilder = inject(FormBuilder);
+  private _videoService = inject(VideoService);
+  private _router = inject(Router);
+  private _snackBar = inject(MatSnackBar);
+  private _userService = inject(UserService);
+  private _authService = inject(AuthService);
 
   form: FormGroup<VideoForm> = this.formBuilder.group({
     title: this.formBuilder.control('', {
@@ -64,10 +77,11 @@ export class UploadVideoComponent {
     }
   }
 
-  uploadVideo() {
+  async uploadVideo() {
     if (this.form.invalid) return;
     const storageRef = ref(this.storage, this.video.name);
     const uploadTask = uploadBytesResumable(storageRef, this.video);
+
     uploadTask.on('state_changed',
       (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -78,9 +92,41 @@ export class UploadVideoComponent {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log('File available at', downloadURL);
+          const videoData: Video = {
+          title: this.form.value.title!,
+          description: this.form.value.description!,
+          size: this.video.size,
+          uploadedAt: new Date(),
+          updatedAt: null,
+          views: 0,
+          likes: 0,
+          comments: [],
+          url: downloadURL,
+          };
+          this._videoService.createVideo(videoData).toPromise();
+
+          this._authService.authState$.subscribe((user) => {
+            if (user) {
+              this._userService.getUser(user.uid).subscribe((dbUser: User) => {
+                dbUser.videos.push(videoData);
+                this._userService.updateUser(dbUser._id, dbUser).toPromise();
+              });
+            }
+          });
         });
-      }
-    );
+
+      const snackBarRef = this.openSnackBar();
+
+      snackBarRef.afterDismissed().subscribe(() => {
+        this._router.navigateByUrl('/');
+      });
+    });
   }
+    openSnackBar() {
+      return this._snackBar.open('Video uploaded successfully', 'Close', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'end',
+      });
+    }
 }
