@@ -8,6 +8,9 @@ export class Video {
   views: number;
   likes: number;
   comments: any[];
+  userId: string;
+  fromUser: string;
+  userPhoto: string;
   url: string;
 
   constructor(
@@ -20,6 +23,9 @@ export class Video {
     views: number,
     likes: number,
     comments: any[],
+    userId: string,
+    fromUser: string,
+    userPhoto: string,
     url: string
   )
   {
@@ -32,6 +38,9 @@ export class Video {
     this.views = views;
     this.likes = likes;
     this.comments = comments;
+    this.userId = userId;
+    this.fromUser = fromUser;
+    this.userPhoto = userPhoto;
     this.url = url;
   }
 }

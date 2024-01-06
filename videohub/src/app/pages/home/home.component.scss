@@ -1,0 +1,39 @@
+video {
+  max-height: 225px;
+  max-width: 400px;
+  border-radius: 10px;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1rem));
+  grid-gap: 1rem;
+  padding: 1rem;
+}
+
+h3 {
+  margin-bottom: 0%;
+  color: white;
+}
+
+p {
+  font-size: small;
+  color: grey;
+  margin-bottom: 0%;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  height: 36px;
+  width: 36px;
+  border-radius: 50px;
+  margin-right: 10px;
+}
+
+.video-item__details {
+  display: flex;
+  margin-top: 5px;
+}

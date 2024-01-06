@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Video } from "../../models/video";
 import { VideoService } from '../../core/services/video.service';
-
+import { CommonModule } from '@angular/common';
+import { UserService } from '../../core/services/user.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   listVideos: Video[] = [];
-
+  private _userService = inject(UserService);
   constructor(private _videoService: VideoService) {  }
 
   ngOnInit() {
@@ -19,11 +20,10 @@ export class HomeComponent {
   }
 
   getVideos() {
-    return this._videoService.getVideos().subscribe((data) => {
-      console.log(data);
-    }, (error) => {
-      console.log(error);
-    }
-    );
-  }
+  return this._videoService.getVideos().subscribe((data) => {
+    this.listVideos = data; // Asigna los datos a la lista de videos
+  }, (error) => {
+    console.log(error);
+  });
+}
 }

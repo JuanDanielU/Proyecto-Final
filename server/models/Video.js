@@ -29,6 +29,18 @@ const VideoSchema = mongoose.Schema({
         type: Object,
         default: {},
     },
+    userId: {
+        type: String,
+        required: true,
+    },
+    fromUser: {
+        type: String,
+        required: true,
+    },
+    userPhoto: {
+        type: String,
+        required: false,
+    },
     url: {
         type: String,
         required: true,

@@ -40,7 +40,7 @@ exports.getVideo = async (req, res) => {
 
 exports.updateVideo = async (req, res) => {
     try {
-        const { title, description, uploadDate, views, likes, comments, url } = req.body;
+        const { title, description, uploadDate, views, likes, comments,userId, fromUser, url } = req.body;
         let video = await Video.findById(req.params.id);
         if (!video) {
             res.status(404).json({ msg: 'Video not found' });
@@ -52,6 +52,9 @@ exports.updateVideo = async (req, res) => {
         video.views = views;
         video.likes = likes;
         video.comments = comments;
+        video.userId = userId;
+        video.fromUser = fromUser;
+        video.userPhoto = userPhoto;
         video.url = url;
 
         video = await Video.findOneAndUpdate({ _id: req.params.id }, video, { new: true });

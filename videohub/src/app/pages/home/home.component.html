@@ -1,1 +1,15 @@
-<p>home works!</p>
+<div class="video-grid">
+  <div class="video-item" *ngFor="let video of listVideos">
+    <a [href]="video.url">
+      <video [src]="video.url" alt="Miniatura of video"></video>
+      <div class="video-item__details">
+        <img [src]="video.userPhoto" alt="Avatar of user">
+        <div>
+        <h3>{{ video.title }}</h3>
+        <p>{{ video.fromUser }}</p>
+        <p>{{ video.views }} views | {{ video.likes }} likes</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>

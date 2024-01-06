@@ -92,22 +92,26 @@ export class UploadVideoComponent {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const videoData: Video = {
-          title: this.form.value.title!,
-          description: this.form.value.description!,
-          size: this.video.size,
-          uploadedAt: new Date(),
-          updatedAt: null,
-          views: 0,
-          likes: 0,
-          comments: [],
-          url: downloadURL,
-          };
-          this._videoService.createVideo(videoData).toPromise();
-
           this._authService.authState$.subscribe((user) => {
             if (user) {
               this._userService.getUser(user.uid).subscribe((dbUser: User) => {
+
+                const videoData: Video = {
+                title: this.form.value.title!,
+                description: this.form.value.description!,
+                size: this.video.size,
+                uploadedAt: new Date(),
+                updatedAt: null,
+                views: 0,
+                likes: 0,
+                comments: [],
+                userId: user.uid,
+                fromUser: user.displayName!,
+                userPhoto: user.photoURL!,
+                url: downloadURL,
+                };
+                this._videoService.createVideo(videoData).toPromise();
+
                 dbUser.videos.push(videoData);
                 this._userService.updateUser(dbUser._id, dbUser).toPromise();
               });
@@ -122,11 +126,11 @@ export class UploadVideoComponent {
       });
     });
   }
-    openSnackBar() {
-      return this._snackBar.open('Video uploaded successfully', 'Close', {
+  openSnackBar() {
+    return this._snackBar.open('Video uploaded successfully', 'Close', {
         duration: 2000,
         verticalPosition: 'top',
         horizontalPosition: 'end',
       });
-    }
+  }
 }
