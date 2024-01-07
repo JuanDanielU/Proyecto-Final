@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../core/services/user.service';
 import { User } from '../../models/user';
 import { AuthService } from '../../core/services/auth.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import {
   FormBuilder,
@@ -37,11 +38,15 @@ interface VideoForm {
     MatSelectModule,
     ReactiveFormsModule,
     MatSnackBarModule,
+    MatProgressBarModule,
   ],
   templateUrl: './upload-video.component.html',
   styleUrl: './upload-video.component.scss'
 })
 export class UploadVideoComponent {
+  videoName = false;
+  progress = 0;
+  disabled = false;
   hide = true;
   formBuilder = inject(FormBuilder);
   private _videoService = inject(VideoService);
@@ -67,6 +72,7 @@ export class UploadVideoComponent {
   chooseVideo(event: any): void {
     this.hide = false;
     this.video = event.target.files[0];
+    this.videoName = true;
     const videoThumbnail = document.getElementById('videoThumbnail') as HTMLVideoElement;
 
     if (this.video) {
@@ -79,13 +85,13 @@ export class UploadVideoComponent {
 
   async uploadVideo() {
     if (this.form.invalid) return;
+    this.disabled = true;
     const storageRef = ref(this.storage, this.video.name);
     const uploadTask = uploadBytesResumable(storageRef, this.video);
 
     uploadTask.on('state_changed',
       (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(`Upload is ${progress}% done`);
+        this.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       },
       (error) => {
         console.log(error);
@@ -126,6 +132,7 @@ export class UploadVideoComponent {
       });
     });
   }
+
   openSnackBar() {
     return this._snackBar.open('Video uploaded successfully', 'Close', {
         duration: 2000,

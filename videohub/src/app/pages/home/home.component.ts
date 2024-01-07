@@ -15,7 +15,7 @@ export class HomeComponent {
   listVideos: Video[] = [];
   totalVideos = 0;
   currentPage = 1;
-  videosPerPage = 2;
+  videosPerPage = 30;
 
   private _videoService = inject(VideoService);
 

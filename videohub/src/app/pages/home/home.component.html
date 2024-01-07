@@ -2,7 +2,9 @@
   <div class="video-item" *ngFor="let video of listVideos | slice:
   (currentPage - 1) * videosPerPage : currentPage * videosPerPage">
     <a [href]="video.url">
-      <video [src]="video.url" alt="Miniatura of video"></video>
+      <div class="video-background">
+        <video [src]="video.url" alt="Miniatura of video"></video>
+      </div>
       <div class="video-item__details">
         <img [src]="video.userPhoto" alt="Avatar of user">
         <div>
