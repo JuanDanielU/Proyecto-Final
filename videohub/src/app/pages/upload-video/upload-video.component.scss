@@ -11,34 +11,39 @@
 
   &__container {
     width: 100%;
-    background-color: black;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 20px 30px;
     max-width: 400px;
+    background-color: #000000;
   }
 
   label {
     display: flex;
-    color: var(--green);
     font-size: medium;
-    text-decoration: underline;
   }
 
   video {
     display: flex;
     max-width: 225px;
     max-height: 400px;
-    border-radius: 5px;
+    border-radius: 10px;
   }
 
   .videoThumbnails {
     display: flex;
     justify-content: center;
+    background-color: black;
+    border-radius: 10px;
   }
 
   .video-details {
     display: flex;
     flex-direction: column;
+  }
+
+
+  .uploadButton {
+    margin-bottom: 5px;
   }
 
   hr {
