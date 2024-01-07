@@ -1,0 +1,38 @@
+<div class="form">
+  <div class="form__container">
+    <h1>Upload video</h1>
+    <form [formGroup]="form" (ngSubmit)="uploadVideo()">
+      <div>
+        <mat-form-field>
+          <mat-label>Title</mat-label>
+          <input title="title" matInput formControlName="title" />
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea aria-label="description" matInput formControlName="description"></textarea>
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="video-details">
+        <button #inputRef class="chooseButton" mat-button aria-label="button" type="button" (click)="labelRef.click()">
+          Choose video: {{ videoName ? video.name : ' No video selected'}}
+          <label #labelRef for="fileInput" class="mat-button"></label>
+        </button>
+        <br />
+        <input id="fileInput" aria-label="Choose" type="file" (change)="chooseVideo($event)" class="inputfilechooser" />
+        <div class="videoThumbnails">
+          <video id="videoThumbnail" [style.display]="hide ? 'none' : '' " src="#" alt="Video Thumbnail"></video>
+        </div>
+        <br [style.display]="hide ? 'none' : '' " />
+        <p [style.display]="disabled ? '' : 'none'"> {{progress}}% uploaded</p>
+        <mat-progress-bar [style.display]="disabled ? '' : 'none'" color="accent" mode="determinate" [value]="progress"></mat-progress-bar>
+        <button class="uploadButton" type="submit" [disabled]="disabled" mat-raised-button>Upload</button>
+      </div>
+    </form>
+  </div>
+</div>
