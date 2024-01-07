@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatToolbarModule,
     MatIconModule,
     MatMenuModule,
-    HttpClientModule
+    HttpClientModule,
+    MatPaginatorModule
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']

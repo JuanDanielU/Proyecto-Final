@@ -1,5 +1,6 @@
 <div class="video-grid">
-  <div class="video-item" *ngFor="let video of listVideos">
+  <div class="video-item" *ngFor="let video of listVideos | slice:
+  (currentPage - 1) * videosPerPage : currentPage * videosPerPage">
     <a [href]="video.url">
       <video [src]="video.url" alt="Miniatura of video"></video>
       <div class="video-item__details">
@@ -13,3 +14,10 @@
     </a>
   </div>
 </div>
+<mat-paginator araia-label="Select page"
+[pageIndex]="currentPage - 1"
+[length]="totalVideos"
+[pageSize]="videosPerPage"
+[hidePageSize]="true"
+(page)="onPageChange($event)"
+></mat-paginator>

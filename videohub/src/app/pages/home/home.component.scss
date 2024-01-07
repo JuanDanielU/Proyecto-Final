@@ -37,3 +37,12 @@ img {
   display: flex;
   margin-top: 5px;
 }
+
+mat-paginator {
+  float: right;
+  width: 14rem;
+  background-color: #000000;
+  color: white;
+  border-radius: 10px;
+  margin-top: 20px;
+}
