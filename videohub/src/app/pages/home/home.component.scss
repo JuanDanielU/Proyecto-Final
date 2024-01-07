@@ -1,17 +1,13 @@
 video {
-  max-height: 225px;
-  max-width: 400px;
+  height: 225px;
+  width: 400px;
   border-radius: 10px;
   justify-content: center;
+  background-color: black;
 }
 
-.video-background {
-  display: flex;
-  background-color: #000000;
-  justify-content: center;
-  max-height: 225px;
-  max-width: 400px;
-  border-radius: 10px;
+.hand-cursor {
+  cursor: pointer;
 }
 
 .video-grid {

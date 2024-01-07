@@ -21,10 +21,10 @@
       <div class="video-details">
         <button #inputRef class="chooseButton" mat-button aria-label="button" type="button" (click)="labelRef.click()">
           Choose video: {{ videoName ? video.name : ' No video selected'}}
-          <label #labelRef for="fileInput" class="mat-button" style.display="none"></label>
+          <label #labelRef for="fileInput" class="mat-button"></label>
         </button>
         <br />
-        <input id="fileInput" aria-label="Choose" type="file" (change)="chooseVideo($event)" style=display:none />
+        <input id="fileInput" aria-label="Choose" type="file" (change)="chooseVideo($event)" class="inputfilechooser" />
         <div class="videoThumbnails">
           <video id="videoThumbnail" [style.display]="hide ? 'none' : '' " src="#" alt="Video Thumbnail"></video>
         </div>

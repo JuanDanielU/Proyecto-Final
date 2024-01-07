@@ -3,6 +3,7 @@ import { Video } from "../../models/video";
 import { VideoService } from '../../core/services/video.service';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ export class HomeComponent {
   currentPage = 1;
   videosPerPage = 30;
 
+  private router = inject(Router);
   private _videoService = inject(VideoService);
 
   ngOnInit() {
@@ -30,6 +32,10 @@ export class HomeComponent {
     }, (error) => {
       console.log(error);
     });
+  }
+
+  redirectToPlayer(videoId: string) {
+    this.router.navigate(['player', videoId]);
   }
 
   onPageChange(event: any): void {

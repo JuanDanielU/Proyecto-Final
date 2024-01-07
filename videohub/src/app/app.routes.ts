@@ -5,6 +5,7 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { authGuard, publicGuard } from './core/guards';
 import { UploadVideoComponent } from './pages/upload-video/upload-video.component';
 import { HomeComponent } from './pages/home/home.component';
+import { PlayerComponent } from './pages/player/player.component';
 
 export const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -16,4 +17,5 @@ export const routes: Routes = [
       {path: 'login', component: LoginComponent}
     ]
   },
+  {path: 'player/:id', component: PlayerComponent},
 ];
