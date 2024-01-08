@@ -4,6 +4,7 @@ import { VideoService } from '../../core/services/video.service';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { list } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-home',
@@ -25,13 +26,9 @@ export class HomeComponent {
     this.getVideos();
   }
 
-  getVideos() {
-    return this._videoService.getVideos().subscribe((data) => {
-      this.listVideos = data; // Asigna los datos a la lista de videos
-      this.totalVideos = this.listVideos.length;
-    }, (error) => {
-      console.log(error);
-    });
+  async getVideos() {
+    this.listVideos = await this._videoService.getVideos().toPromise();
+    this.totalVideos = this.listVideos.length;
   }
 
   redirectToPlayer(videoId: string) {
