@@ -112,7 +112,7 @@ export class UploadVideoComponent {
                 likes: 0,
                 comments: [],
                 userId: user.uid,
-                fromUser: user.displayName!,
+                fromUser: dbUser.name,
                 userPhoto: user.photoURL!,
                 url: downloadURL,
                 };
@@ -136,7 +136,7 @@ export class UploadVideoComponent {
   openSnackBar() {
     return this._snackBar.open('Video uploaded successfully', 'Close', {
         duration: 2000,
-        verticalPosition: 'top',
+        verticalPosition: 'bottom',
         horizontalPosition: 'end',
       });
   }

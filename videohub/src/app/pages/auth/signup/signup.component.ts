@@ -23,7 +23,7 @@ import { UserService } from '../../../core/services/user.service';
 import { User } from '../../../models/user';
 
 interface SignupForm {
-  names: FormControl<string>;
+  name: FormControl<string>;
   lastName: FormControl<string>;
   email: FormControl<string>;
   password: FormControl<string>;
@@ -52,7 +52,7 @@ export class SignupComponent {
   formBuilder = inject(FormBuilder);
 
   form: FormGroup<SignupForm> = this.formBuilder.group({
-    names: this.formBuilder.control('', {
+    name: this.formBuilder.control('', {
       validators: Validators.required,
       nonNullable: true,
     }),
@@ -103,13 +103,13 @@ export class SignupComponent {
     };
 
     try {
-      await this.authService.signUpWithEmailAndPassword(credential);
+
       const result = await this.authService.signUpWithEmailAndPassword(credential);
       if (result) {
         const userData: User = {
           _id: result.user.uid,
+          name: this.form.value.name + this.form.value.lastName!,
           email: result.user.email!,
-          name: result.user.displayName!,
           videos: [],
           createdAt: new Date(result.user.metadata.creationTime!),
           updatedAt: null,
