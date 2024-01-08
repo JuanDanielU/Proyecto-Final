@@ -103,8 +103,8 @@ export class SignupComponent {
     };
 
     try {
-      await this.authService.signUpWithEmailAndPassword(credential);
       const result = await this.authService.signUpWithEmailAndPassword(credential);
+      console.log(result);
       if (result) {
         const userData: User = {
           _id: result.user.uid,
