@@ -1,26 +1,31 @@
-import { Component, ViewChild, inject } from '@angular/core';
-import { Storage, ref, uploadBytesResumable, getDownloadURL  } from '@angular/fire/storage';
+import { Component, inject } from '@angular/core';
+import {
+  Storage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from '@angular/fire/storage';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { VideoService } from '../../core/services/video.service';
 import { Video } from '../../models/video';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { UserService } from '../../core/services/user.service';
-import { User } from '../../models/user';
 import { AuthService } from '../../core/services/auth.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { UserService } from '../../core/services/user.service';
 
 import {
   FormBuilder,
   FormGroup,
   FormControl,
   Validators,
-  ReactiveFormsModule
+  ReactiveFormsModule,
 } from '@angular/forms';
+import { User } from '../../models/user';
 
 interface VideoForm {
   title: FormControl<string>;
@@ -41,20 +46,19 @@ interface VideoForm {
     MatProgressBarModule,
   ],
   templateUrl: './upload-video.component.html',
-  styleUrl: './upload-video.component.scss'
+  styleUrl: './upload-video.component.scss',
 })
 export class UploadVideoComponent {
   videoName = false;
   userId = '';
-  photoURL = '';
   progress = 0;
   disabled = false;
   hide = true;
   formBuilder = inject(FormBuilder);
+  private _userService = inject(UserService);
   private _videoService = inject(VideoService);
   private _router = inject(Router);
   private _snackBar = inject(MatSnackBar);
-  private _userService = inject(UserService);
   private _authService = inject(AuthService);
 
   form: FormGroup<VideoForm> = this.formBuilder.group({
@@ -68,14 +72,37 @@ export class UploadVideoComponent {
     }),
   });
 
-  public video: any = {};
+  public video: any;
+  userData: User = {} as User;
+  _Video: Video = {
+    title: '',
+    description: '',
+    uploadedAt: new Date(),
+    updatedAt: null,
+    views: 0,
+    likes: 0,
+    comments: [],
+    url: '',
+    userId: '',
+    userPhoto: '',
+    fromUser: '',
+  };
   constructor(public storage: Storage) {}
+
+  ngOnInit(): void {
+    this._authService.authState$.subscribe((user) => {
+      if (!user) return;
+      this.userId = user.uid;
+    });
+  }
 
   chooseVideo(event: any): void {
     this.hide = false;
     this.video = event.target.files[0];
     this.videoName = true;
-    const videoThumbnail = document.getElementById('videoThumbnail') as HTMLVideoElement;
+    const videoThumbnail = document.getElementById(
+      'videoThumbnail'
+    ) as HTMLVideoElement;
 
     if (this.video) {
       const videoURL = URL.createObjectURL(this.video);
@@ -87,18 +114,14 @@ export class UploadVideoComponent {
 
   async uploadVideo() {
     if (this.form.invalid) return;
+    this._Video.title = this.form.value.title!;
+    this._Video.description = this.form.value.description!;
     this.disabled = true;
     const storageRef = ref(this.storage, this.video.name);
     const uploadTask = uploadBytesResumable(storageRef, this.video);
 
-    this._authService.authState$.subscribe((user) => {
-      if (user) {
-        this.userId = user.uid;
-        this.photoURL = user.photoURL!;
-      }
-    });
-
-    uploadTask.on('state_changed',
+    uploadTask.on(
+      'state_changed',
       (snapshot) => {
         this.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       },
@@ -107,43 +130,32 @@ export class UploadVideoComponent {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              this._userService.getUser(this.userId).subscribe((dbUser: User) => {
-                const videoData: Video = {
-                title: this.form.value.title!,
-                description: this.form.value.description!,
-                size: this.video.size,
-                uploadedAt: new Date(),
-                updatedAt: null,
-                views: 0,
-                likes: 0,
-                comments: [],
-                userId: this.userId,
-                fromUser: dbUser.name,
-                userPhoto: this.photoURL!,
-                url: downloadURL,
-                };
-                this._videoService.createVideo(videoData).toPromise();
-
-                dbUser.videos.push(videoData);
-                this._userService.updateUser(dbUser._id, dbUser).toPromise();
-              });
+          this._Video.url = downloadURL;
+          this._Video.uploadedAt = new Date(Date.now());
+          this._userService.getUser(this.userId).subscribe((dbUser) => {
+            this._Video.userId = dbUser._id;
+            this._Video.fromUser = dbUser.name;
+            this._Video.userPhoto = dbUser.userPhoto;
+            this._videoService.createVideo(this._Video).toPromise();
+            dbUser.videos.push(this._Video);
+            this._userService.updateUser(dbUser._id, dbUser).toPromise();
           });
+          this.openSnackBar();
         });
-
-      const snackBarRef = this.openSnackBar();
-
-      snackBarRef.afterDismissed().subscribe(() => {
-        this._router.navigateByUrl('/');
-      });
+      }
+    );
   }
 
   openSnackBar() {
-      return this._snackBar.open('Video uploaded successfully', 'Close', {
-          duration: 2000,
-          verticalPosition: 'bottom',
-          horizontalPosition: 'end',
-        });
-    }
+    return this._snackBar
+      .open('Video uploaded successfully', 'Close', {
+        duration: 2000,
+        verticalPosition: 'bottom',
+        horizontalPosition: 'end',
+      })
+      .afterDismissed()
+      .subscribe(() => {
+        this._router.navigate(['/']);
+      });
+  }
 }
-
-
