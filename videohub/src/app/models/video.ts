@@ -2,7 +2,6 @@ export class Video {
   _id?: string;
   title: string;
   description: string;
-  size: string;
   uploadedAt: Date;
   updatedAt: Date | null;
   views: number;
@@ -17,7 +16,6 @@ export class Video {
     _id: string,
     title: string,
     description: string,
-    size: string,
     uploadedAt: Date,
     updatedAt: Date,
     views: number,
@@ -32,7 +30,6 @@ export class Video {
     this._id = _id;
     this.title = title;
     this.description = description;
-    this.size = size;
     this.uploadedAt = uploadedAt;
     this.updatedAt = updatedAt;
     this.views = views;
