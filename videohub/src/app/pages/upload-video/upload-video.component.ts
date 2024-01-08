@@ -45,6 +45,8 @@ interface VideoForm {
 })
 export class UploadVideoComponent {
   videoName = false;
+  userId = '';
+  photoURL = '';
   progress = 0;
   disabled = false;
   hide = true;
@@ -89,6 +91,13 @@ export class UploadVideoComponent {
     const storageRef = ref(this.storage, this.video.name);
     const uploadTask = uploadBytesResumable(storageRef, this.video);
 
+    this._authService.authState$.subscribe((user) => {
+      if (user) {
+        this.userId = user.uid;
+        this.photoURL = user.photoURL!;
+      }
+    });
+
     uploadTask.on('state_changed',
       (snapshot) => {
         this.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -98,10 +107,7 @@ export class UploadVideoComponent {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          this._authService.authState$.subscribe((user) => {
-            if (user) {
-              this._userService.getUser(user.uid).subscribe((dbUser: User) => {
-
+              this._userService.getUser(this.userId).subscribe((dbUser: User) => {
                 const videoData: Video = {
                 title: this.form.value.title!,
                 description: this.form.value.description!,
@@ -111,9 +117,9 @@ export class UploadVideoComponent {
                 views: 0,
                 likes: 0,
                 comments: [],
-                userId: user.uid,
+                userId: this.userId,
                 fromUser: dbUser.name,
-                userPhoto: user.photoURL!,
+                userPhoto: this.photoURL!,
                 url: downloadURL,
                 };
                 this._videoService.createVideo(videoData).toPromise();
@@ -121,7 +127,6 @@ export class UploadVideoComponent {
                 dbUser.videos.push(videoData);
                 this._userService.updateUser(dbUser._id, dbUser).toPromise();
               });
-            }
           });
         });
 
@@ -130,14 +135,15 @@ export class UploadVideoComponent {
       snackBarRef.afterDismissed().subscribe(() => {
         this._router.navigateByUrl('/');
       });
-    });
   }
 
   openSnackBar() {
-    return this._snackBar.open('Video uploaded successfully', 'Close', {
-        duration: 2000,
-        verticalPosition: 'bottom',
-        horizontalPosition: 'end',
-      });
-  }
+      return this._snackBar.open('Video uploaded successfully', 'Close', {
+          duration: 2000,
+          verticalPosition: 'bottom',
+          horizontalPosition: 'end',
+        });
+    }
 }
+
+
