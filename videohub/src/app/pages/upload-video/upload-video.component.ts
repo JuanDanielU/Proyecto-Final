@@ -93,6 +93,9 @@ export class UploadVideoComponent {
     this._authService.authState$.subscribe((user) => {
       if (!user) return;
       this.userId = user.uid;
+      this._userService.getUser(this.userId).subscribe((dbUser) => {
+        this.userData = dbUser;
+      });
     });
   }
 
@@ -132,18 +135,16 @@ export class UploadVideoComponent {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           this._Video.url = downloadURL;
           this._Video.uploadedAt = new Date(Date.now());
-          this._userService.getUser(this.userId).subscribe((dbUser) => {
-            this._Video.userId = dbUser._id;
-            this._Video.fromUser = dbUser.name;
-            this._Video.userPhoto = dbUser.userPhoto;
-            this._videoService.createVideo(this._Video).toPromise();
-            dbUser.videos.push(this._Video);
-            this._userService.updateUser(dbUser._id, dbUser).toPromise();
-          });
-          this.openSnackBar();
+          this._Video.userId = this.userData._id;
+          this._Video.fromUser = this.userData.name;
+          this._Video.userPhoto = this.userData.photoURL!;
+          this._videoService.createVideo(this._Video).toPromise();
+          this.userData.videos.push(this._Video);
+          this._userService.updateUser(this.userData._id, this.userData).toPromise();
         });
       }
     );
+    this.openSnackBar();
   }
 
   openSnackBar() {
