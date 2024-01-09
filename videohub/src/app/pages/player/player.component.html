@@ -1,3 +1,16 @@
-<div class="video-background">
-  <video controls autoplay name="media"[src]="video.url" alt="Reproductor de video"></video>
+<div class="video-container">
+  <div class="video-background">
+    <video
+      controls
+      autoplay
+      name="media"
+      [src]="video.url"
+      alt="Reproductor de video"
+    ></video>
+  </div>
+  <span class="video-title">{{ video.title }}</span>
+  <div class="user-info">
+    <img class="video-user-image" [src]="userPhoto" alt="Imagen de usuario" />
+    <span class="video-user-name">{{ userName }}</span>
+  </div>
 </div>

@@ -4,8 +4,6 @@ export class Video {
   description: string;
   uploadedAt: Date;
   updatedAt: Date | null;
-  views: number;
-  likes: number;
   comments: any[];
   userId: string;
   fromUser: string;
@@ -32,8 +30,6 @@ export class Video {
     this.description = description;
     this.uploadedAt = uploadedAt;
     this.updatedAt = updatedAt;
-    this.views = views;
-    this.likes = likes;
     this.comments = comments;
     this.userId = userId;
     this.fromUser = fromUser;
