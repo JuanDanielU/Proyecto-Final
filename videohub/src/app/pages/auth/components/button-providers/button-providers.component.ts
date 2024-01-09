@@ -31,7 +31,6 @@ export class ButtonProviders {
           _id: result.user.uid,
           email: result.user.email!,
           name: result.user.displayName!,
-          videos: [],
           createdAt: new Date(result.user.metadata.creationTime!),
           updatedAt: null,
           photoURL: result.user.photoURL,

@@ -2,7 +2,43 @@ video {
   height: 630px;
   width: 1120px;
   border-radius: 10px;
-  margin-top: 1rem;
-  margin-left: 1rem;
   background-color: black;
+}
+
+.video-background {
+  width: 1120px;
+}
+
+.video-container {
+  display: flex;
+  width: 1120px;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-left: 3rem;
+}
+
+.title-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.video-title {
+  color: white;
+  font-size: 1.5rem;
+}
+
+img {
+  height: 36px;
+  width: 36px;
+  border-radius: 50px;
+  margin-right: 10px;
+}
+
+.user-info {
+  align-items: center;
+  display: flex;
+}
+
+.video-user-name {
+  font-size: 1rem;
 }

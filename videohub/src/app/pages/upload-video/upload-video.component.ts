@@ -51,6 +51,8 @@ interface VideoForm {
 export class UploadVideoComponent {
   videoName = false;
   userId = '';
+  userPhoto = '';
+  userName = '';
   progress = 0;
   disabled = false;
   hide = true;
@@ -79,8 +81,6 @@ export class UploadVideoComponent {
     description: '',
     uploadedAt: new Date(),
     updatedAt: null,
-    views: 0,
-    likes: 0,
     comments: [],
     url: '',
     userId: '',
@@ -93,9 +93,6 @@ export class UploadVideoComponent {
     this._authService.authState$.subscribe((user) => {
       if (!user) return;
       this.userId = user.uid;
-      this._userService.getUser(this.userId).subscribe((dbUser) => {
-        this.userData = dbUser;
-      });
     });
   }
 
@@ -119,6 +116,10 @@ export class UploadVideoComponent {
     if (this.form.invalid) return;
     this._Video.title = this.form.value.title!;
     this._Video.description = this.form.value.description!;
+    await this._userService.getUser(this.userId).subscribe((user) => {
+      this.userName = user.name;
+      this.userPhoto = user.photoURL!;
+    });
     this.disabled = true;
     const storageRef = ref(this.storage, this.video.name);
     const uploadTask = uploadBytesResumable(storageRef, this.video);
@@ -135,12 +136,10 @@ export class UploadVideoComponent {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           this._Video.url = downloadURL;
           this._Video.uploadedAt = new Date(Date.now());
-          this._Video.userId = this.userData._id;
-          this._Video.fromUser = this.userData.name;
-          this._Video.userPhoto = this.userData.photoURL!;
+          this._Video.userId = this.userId;
+          this._Video.fromUser = this.userName;
+          this._Video.userPhoto = this.userPhoto!;
           this._videoService.createVideo(this._Video).toPromise();
-          this.userData.videos.push(this._Video);
-          this._userService.updateUser(this.userData._id, this.userData).toPromise();
         });
       }
     );

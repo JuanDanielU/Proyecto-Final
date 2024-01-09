@@ -13,10 +13,6 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    videos: {
-        type: Object,
-        default: {},
-    },
     createdAt: {
         type: Date,
         default: Date.now(),
