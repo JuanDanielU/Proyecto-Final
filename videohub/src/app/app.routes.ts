@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { authGuard, publicGuard } from './core/guards';
+import { authGuard } from './core/guards';
 import { UploadVideoComponent } from './pages/upload-video/upload-video.component';
 import { HomeComponent } from './pages/home/home.component';
 import { PlayerComponent } from './pages/player/player.component';
