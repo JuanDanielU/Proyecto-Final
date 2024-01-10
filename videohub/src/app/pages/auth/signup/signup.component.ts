@@ -106,7 +106,7 @@ export class SignupComponent {
       if (result) {
         const userData: User = {
           _id: result.user.uid,
-          name: this.form.value.name + this.form.value.lastName!,
+          name: this.form.value.name + ' ' + this.form.value.lastName!,
           email: result.user.email!,
           createdAt: new Date(result.user.metadata.creationTime!),
           updatedAt: null,
