@@ -4,7 +4,6 @@ import { VideoService } from '../../core/services/video.service';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { list } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +13,7 @@ import { list } from '@angular/fire/storage';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  listVideos: Video[] = [];
+  Videos: Video[] = [];
   totalVideos = 0;
   currentPage = 1;
   videosPerPage = 30;
@@ -27,8 +26,8 @@ export class HomeComponent {
   }
 
   async getVideos() {
-    this.listVideos = await this._videoService.getVideos().toPromise();
-    this.totalVideos = this.listVideos.length;
+    this.Videos = await this._videoService.getVideos().toPromise();
+    this.totalVideos = this.Videos.length;
   }
 
   redirectToPlayer(videoId: string) {

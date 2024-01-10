@@ -27,11 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
 export class AppComponent {
   title = 'videohub';
 
-  hideLogged = false;
-  hideUnlogged = true;
-  hideToolbar = false;
-
-  userName: string = "";
+  logged = false;
 
   private _router = inject(Router);
 
@@ -44,30 +40,12 @@ export class AppComponent {
   ngOnInit() {
     this.authservice.authState$.subscribe((user) => {
       if (user) {
-        this.hideUnlogged= false;
-        this.hideLogged = true;
+        this.logged = true;
       }
       else{
-        this.hideUnlogged = true;
-        this.hideLogged = false;
+        this.logged = false;
       }
     });
-
-    if(this._router.url === '/auth/login' || this._router.url === '/auth/signup') {
-      this.hideToolbar = true;
-    }
-    else {
-      this.hideToolbar = false;
-    }
-  }
-
-  ngOnChanges() {
-    if(this._router.url === '/auth/login' || this._router.url === '/auth/signup') {
-      this.hideToolbar = true;
-    }
-    else {
-      this.hideToolbar = false;
-    }
   }
 
   gotoUpload(): void {
@@ -75,14 +53,18 @@ export class AppComponent {
   }
 
   async logIn(): Promise<void> {
-    this._router.navigateByUrl('/auth/login');
-    this.hideLogged = true;
+    try {
+      await this.authservice.signInWithGoogleProvider();
+      this._router.navigate(['/']);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async logOut(): Promise<void> {
     try {
       await this.authservice.logOut();
-      this._router.navigateByUrl('/auth/login');
+      this._router.navigateByUrl('/');
 
     } catch (error) {
       console.log(error);

@@ -16,7 +16,6 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { UserService } from '../../core/services/user.service';
 
 import {
   FormBuilder,
@@ -25,7 +24,6 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { User } from '../../models/user';
 
 interface VideoForm {
   title: FormControl<string>;
@@ -57,7 +55,6 @@ export class UploadVideoComponent {
   disabled = false;
   hide = true;
   formBuilder = inject(FormBuilder);
-  private _userService = inject(UserService);
   private _videoService = inject(VideoService);
   private _router = inject(Router);
   private _snackBar = inject(MatSnackBar);
@@ -89,18 +86,12 @@ export class UploadVideoComponent {
   constructor(public storage: Storage) {}
 
   ngOnInit(): void {
-    this._authService.authState$.pipe().subscribe((user) => {
+    this._authService.authState$.subscribe((user) => {
       if (user) {
-        this.getUserData(user.uid);
+        this.userId = user.uid;
+        this.userPhoto = user.photoURL!;
+        this.userName = user.displayName!;
       }
-    });
-  }
-
-  async getUserData(userId: string) {
-    this._userService.getUser(userId).subscribe((data) => {
-      this.userId = userId;
-      this.userPhoto = data.photoURL;
-      this.userName = data.name;
     });
   }
 

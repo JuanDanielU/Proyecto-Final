@@ -5,8 +5,6 @@ import {
   GoogleAuthProvider,
   UserCredential,
   authState,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
   signInWithPopup,
 } from '@angular/fire/auth';
 
@@ -23,24 +21,12 @@ export class AuthService {
 
   readonly authState$ = authState(this.auth);
 
-  signUpWithEmailAndPassword(credential: Credential): Promise<UserCredential> {
-    return createUserWithEmailAndPassword(
-      this.auth,
-      credential.email,
-      credential.password
-    );
-  }
-
-  logInWithEmailAndPassword(credential: Credential) {
-    return signInWithEmailAndPassword(
-      this.auth,
-      credential.email,
-      credential.password
-    );
-  }
-
   logOut(): Promise<void> {
     return this.auth.signOut();
+  }
+
+  userId(): string {
+    return this.auth.currentUser?.uid ?? '';
   }
 
   // providers

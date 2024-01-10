@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { Video } from '../../models/video';
 import { VideoService } from '../../core/services/video.service';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from '../../core/services/user.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -18,7 +17,7 @@ export class PlayerComponent {
   video = {} as Video;
   userPhoto = '';
   userName = '';
-  private _userService = inject(UserService);
+
   private router = inject(ActivatedRoute);
   private _videoService = inject(VideoService);
 
@@ -33,10 +32,8 @@ export class PlayerComponent {
     return this._videoService.getVideo(this.videoId).subscribe(
       (data) => {
         this.video = data;
-        this._userService.getUser(this.video.userId).subscribe((data) => {
-          this.userPhoto = data.photoURL;
-          this.userName = data.name;
-        });
+        this.userPhoto = this.video.userPhoto;
+        this.userName = this.video.fromUser;
       },
       (error) => {
         console.log(error);
