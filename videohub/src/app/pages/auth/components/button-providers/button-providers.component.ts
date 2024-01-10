@@ -24,8 +24,8 @@ export class ButtonProviders {
   async signUpWithGoogle(): Promise<void> {
     try {
       const result = await this._authService.signInWithGoogleProvider();
-      const creationTime = new Date(result.user.metadata.creationTime!).toString();
       const dateTimeNow = new Date(Date.now()).toString();
+      const creationTime = new Date(result.user.metadata.creationTime!).toString();
       if (creationTime === dateTimeNow) {
         const user: User = {
           _id: result.user.uid,
