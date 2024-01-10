@@ -53,12 +53,7 @@ export class AppComponent {
   }
 
   async logIn(): Promise<void> {
-    try {
-      await this.authservice.signInWithGoogleProvider();
-      this._router.navigate(['/']);
-    } catch (error) {
-      console.log(error);
-    }
+    this._router.navigateByUrl('/auth/login');
   }
 
   async logOut(): Promise<void> {

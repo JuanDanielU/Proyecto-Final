@@ -16,6 +16,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { UserService } from '../../core/services/user.service';
 
 import {
   FormBuilder,
@@ -59,6 +60,7 @@ export class UploadVideoComponent {
   private _router = inject(Router);
   private _snackBar = inject(MatSnackBar);
   private _authService = inject(AuthService);
+  private _userService = inject(UserService);
 
   form: FormGroup<VideoForm> = this.formBuilder.group({
     title: this.formBuilder.control('', {

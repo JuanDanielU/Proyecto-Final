@@ -21,3 +21,17 @@ export const authGuard: CanActivateFn = () => {
     })
   );
 };
+
+export const publicGuard: CanActivateFn = () => {
+  const router = routerInjection();
+
+  return authStateObs$().pipe(
+    map((user) => {
+      if (user) {
+        router.navigateByUrl('/');
+        return false;
+      }
+      return true;
+    })
+  );
+};
