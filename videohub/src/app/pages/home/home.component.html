@@ -1,5 +1,5 @@
 <div class="video-grid">
-  <div class="video-item" *ngFor="let video of listVideos | slice:
+  <div class="video-item" *ngFor="let video of Videos | slice:
   (currentPage - 1) * videosPerPage : currentPage * videosPerPage">
     <a (click)="redirectToPlayer(video._id!)" class="hand-cursor">
         <video [src]="video.url" alt="Miniatura of video"></video>
