@@ -17,7 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 
 import { AuthService, Credential } from '../../../core/services/auth.service';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { ButtonProviders } from '../components/button-providers/button-providers.component';
 import { UserService } from '../../../core/services/user.service';
 import { User } from '../../../models/user';
@@ -44,7 +44,7 @@ interface SignupForm {
     ButtonProviders,
   ],
   templateUrl: './signup.component.html',
-  styleUrls: ['../login/login.component.scss'],
+  styleUrls: ['./signup.component.scss'],
 })
 
 export class SignupComponent {
@@ -70,11 +70,6 @@ export class SignupComponent {
     }),
   });
 
-  Signup(): void {
-    if (this.form.invalid) return;
-      console.log(this.form.value);
-  }
-
   private authService = inject(AuthService);
   private _router = inject(Router);
   private _snackBar = inject(MatSnackBar);
@@ -83,14 +78,13 @@ export class SignupComponent {
   get isEmailValid(): string | boolean {
     const control = this.form.get('email');
 
-    const isInvalid = control?.invalid && control.touched;
+    const isInvalid = control?.invalid;
 
     if (isInvalid) {
       return control.hasError('required')
-        ? 'This field is required'
+        ? 'Email is required'
         : 'Enter a valid email';
     }
-
     return false;
   }
 
@@ -103,18 +97,17 @@ export class SignupComponent {
     };
 
     try {
-
       const result = await this.authService.signUpWithEmailAndPassword(credential);
       if (result) {
-        const userData: User = {
+        const newUser: User = {
           _id: result.user.uid,
-          name: this.form.value.name + this.form.value.lastName!,
+          name: this.form.value.name + ' ' + this.form.value.lastName!,
           email: result.user.email!,
           createdAt: new Date(result.user.metadata.creationTime!),
           updatedAt: null,
           photoURL: result.user.photoURL,
         };
-        await this._userService.createUser(userData).toPromise();
+        await this._userService.createUser(newUser).toPromise();
       }
 
       const snackBarRef = this.openSnackBar();
@@ -123,14 +116,23 @@ export class SignupComponent {
         this._router.navigateByUrl('/');
       });
     } catch (error) {
-      console.error(error);
+      this.openSnackBarError();
+      this.form.controls.email.setErrors({ emailInUse: true });
     }
   }
 
   openSnackBar() {
     return this._snackBar.open('Succesfully Sign up 😀', 'Close', {
       duration: 2000,
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
+      horizontalPosition: 'end',
+    });
+  }
+
+  openSnackBarError() {
+    return this._snackBar.open('Email already in use 😥', 'Close', {
+      duration: 2000,
+      verticalPosition: 'bottom',
       horizontalPosition: 'end',
     });
   }

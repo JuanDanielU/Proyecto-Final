@@ -16,8 +16,6 @@ export class Video {
     description: string,
     uploadedAt: Date,
     updatedAt: Date,
-    views: number,
-    likes: number,
     comments: any[],
     userId: string,
     fromUser: string,

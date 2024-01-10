@@ -75,7 +75,6 @@ export class UploadVideoComponent {
   });
 
   public video: any;
-  userData: User = {} as User;
   _Video: Video = {
     title: '',
     description: '',
@@ -90,10 +89,28 @@ export class UploadVideoComponent {
   constructor(public storage: Storage) {}
 
   ngOnInit(): void {
-    this._authService.authState$.subscribe((user) => {
-      if (!user) return;
-      this.userId = user.uid;
+    this._authService.authState$.pipe().subscribe((user) => {
+      if (user) {
+        this.getUserData(user.uid);
+      }
     });
+  }
+
+  async getUserData(userId: string) {
+    this._userService.getUser(userId).subscribe((data) => {
+      this.userId = userId;
+      this.userPhoto = data.photoURL;
+      this.userName = data.name;
+    });
+  }
+
+  async videoUploaded(downloadURL: string) {
+    this._Video.url = downloadURL;
+    this._Video.uploadedAt = new Date(Date.now());
+    this._Video.userId = this.userId;
+    this._Video.fromUser = this.userName;
+    this._Video.userPhoto = this.userPhoto!;
+    this._videoService.createVideo(this._Video).toPromise();
   }
 
   chooseVideo(event: any): void {
@@ -116,10 +133,6 @@ export class UploadVideoComponent {
     if (this.form.invalid) return;
     this._Video.title = this.form.value.title!;
     this._Video.description = this.form.value.description!;
-    await this._userService.getUser(this.userId).subscribe((user) => {
-      this.userName = user.name;
-      this.userPhoto = user.photoURL!;
-    });
     this.disabled = true;
     const storageRef = ref(this.storage, this.video.name);
     const uploadTask = uploadBytesResumable(storageRef, this.video);
@@ -134,12 +147,7 @@ export class UploadVideoComponent {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          this._Video.url = downloadURL;
-          this._Video.uploadedAt = new Date(Date.now());
-          this._Video.userId = this.userId;
-          this._Video.fromUser = this.userName;
-          this._Video.userPhoto = this.userPhoto!;
-          this._videoService.createVideo(this._Video).toPromise();
+          this.videoUploaded(downloadURL);
         });
       }
     );
@@ -147,8 +155,7 @@ export class UploadVideoComponent {
   }
 
   openSnackBar() {
-    return this._snackBar
-      .open('Video uploaded successfully', 'Close', {
+    return this._snackBar.open('Video uploaded successfully', 'Close', {
         duration: 2000,
         verticalPosition: 'bottom',
         horizontalPosition: 'end',

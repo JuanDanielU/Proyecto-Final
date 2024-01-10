@@ -9,6 +9,15 @@
     color: var(--green);
   }
 
+  .snackbar-success {
+    background-color: var(--green);
+    color: black;
+  }
+  .snackbar-error {
+    background-color: red;
+    color: white;
+  }
+
   &__container {
     width: 100%;
     background-color: black;
