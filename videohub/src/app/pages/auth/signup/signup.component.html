@@ -4,7 +4,7 @@
     <form [formGroup]="form" (ngSubmit)="signUp()">
       <div>
         <mat-form-field>
-          <mat-label>Nombres</mat-label>
+          <mat-label>Name</mat-label>
           <input title="name" matInput formControlName="name" />
           <mat-error>This field is required</mat-error>
         </mat-form-field>
@@ -12,7 +12,7 @@
 
       <div>
         <mat-form-field>
-          <mat-label>Apellidos</mat-label>
+          <mat-label>Last name</mat-label>
           <input title="lastName" matInput formControlName="lastName" />
           <mat-error>This field is required</mat-error>
         </mat-form-field>
@@ -21,7 +21,7 @@
         <mat-form-field>
           <mat-label>Email</mat-label>
           <input title="Email" matInput formControlName="email" />
-          <mat-error *ngIf="isEmailValid as messsage">{{ messsage }}</mat-error>
+          <mat-error *ngIf="isEmailValid as message">{{ message }}</mat-error>
         </mat-form-field>
       </div>
 
