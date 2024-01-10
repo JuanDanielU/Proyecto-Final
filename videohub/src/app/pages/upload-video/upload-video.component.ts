@@ -139,21 +139,22 @@ export class UploadVideoComponent {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           this.videoUploaded(downloadURL);
-        });
+        })
       }
     );
     this.openSnackBar();
   }
 
   openSnackBar() {
-    return this._snackBar.open('Video uploaded successfully', 'Close', {
+    return this._snackBar
+      .open('Video uploaded successfully', 'Close', {
         duration: 2000,
         verticalPosition: 'bottom',
         horizontalPosition: 'end',
       })
       .afterDismissed()
       .subscribe(() => {
-        this._router.navigate(['/']);
+        this._router.navigateByUrl('/');
       });
   }
 }
