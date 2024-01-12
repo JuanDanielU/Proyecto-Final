@@ -31,6 +31,7 @@ export class ButtonProviders {
           _id: result.user.uid,
           name: result.user.displayName!,
           email: result.user.email!,
+          subscribers: [],
           createdAt: new Date(Date.now()),
           updatedAt: null,
           photoURL: result.user.photoURL,

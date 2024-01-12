@@ -33,6 +33,12 @@
     border-radius: 10px;
   }
 
+  .videoNoSelected {
+    display: flex;
+    color: red;
+    margin-top: 5px;
+  }
+
   .videoThumbnails {
     display: flex;
     justify-content: center;

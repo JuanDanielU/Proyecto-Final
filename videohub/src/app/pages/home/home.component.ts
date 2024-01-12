@@ -16,7 +16,7 @@ export class HomeComponent {
   Videos: Video[] = [];
   totalVideos = 0;
   currentPage = 1;
-  videosPerPage = 30;
+  videosPerPage = 10;
 
   private router = inject(Router);
   private _videoService = inject(VideoService);

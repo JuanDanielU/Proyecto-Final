@@ -53,7 +53,7 @@ export class AppComponent {
   }
 
   async logIn(): Promise<void> {
-    this._router.navigateByUrl('/auth/login');
+    this.authservice.signInWithGoogleProvider();
   }
 
   async logOut(): Promise<void> {

@@ -12,11 +12,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { VideoService } from '../../core/services/video.service';
 import { Video } from '../../models/video';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { UserService } from '../../core/services/user.service';
+import { CommonModule } from '@angular/common';
 
 import {
   FormBuilder,
@@ -41,8 +40,8 @@ interface VideoForm {
     MatButtonModule,
     MatSelectModule,
     ReactiveFormsModule,
-    MatSnackBarModule,
     MatProgressBarModule,
+    CommonModule,
   ],
   templateUrl: './upload-video.component.html',
   styleUrl: './upload-video.component.scss',
@@ -55,12 +54,11 @@ export class UploadVideoComponent {
   progress = 0;
   disabled = false;
   hide = true;
+  videoSelected = true;
+  hideUploadButton = false;
   formBuilder = inject(FormBuilder);
   private _videoService = inject(VideoService);
-  private _router = inject(Router);
-  private _snackBar = inject(MatSnackBar);
   private _authService = inject(AuthService);
-  private _userService = inject(UserService);
 
   form: FormGroup<VideoForm> = this.formBuilder.group({
     title: this.formBuilder.control('', {
@@ -80,6 +78,7 @@ export class UploadVideoComponent {
     uploadedAt: new Date(),
     updatedAt: null,
     comments: [],
+    likes: [],
     url: '',
     userId: '',
     userPhoto: '',
@@ -91,8 +90,8 @@ export class UploadVideoComponent {
     this._authService.authState$.subscribe((user) => {
       if (user) {
         this.userId = user.uid;
-        this.userPhoto = user.photoURL!;
         this.userName = user.displayName!;
+        this.userPhoto = user.photoURL!;
       }
     });
   }
@@ -115,15 +114,23 @@ export class UploadVideoComponent {
     ) as HTMLVideoElement;
 
     if (this.video) {
+      this.videoSelected = true;
       const videoURL = URL.createObjectURL(this.video);
       videoThumbnail.src = videoURL;
     } else {
+      this.videoSelected = false;
       videoThumbnail.src = '#';
     }
   }
 
   async uploadVideo() {
     if (this.form.invalid) return;
+    if (!this.video) {
+      this.videoSelected = false;
+      return;
+    }
+    console.log(this.video);
+    this.hideUploadButton = true;
     this._Video.title = this.form.value.title!;
     this._Video.description = this.form.value.description!;
     this.disabled = true;
@@ -134,29 +141,20 @@ export class UploadVideoComponent {
       'state_changed',
       (snapshot) => {
         this.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        if (this.progress === 100) {
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }
       },
       (error) => {
         console.log(error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          this.videoUploaded(downloadURL);
-        })
+          this.videoUploaded(downloadURL)
+        });
       }
     );
-    this.openSnackBar();
-  }
-
-  openSnackBar() {
-    return this._snackBar
-      .open('Video uploaded successfully', 'Close', {
-        duration: 2000,
-        verticalPosition: 'bottom',
-        horizontalPosition: 'end',
-      })
-      .afterDismissed()
-      .subscribe(() => {
-        this._router.navigateByUrl('/');
-      });
   }
 }

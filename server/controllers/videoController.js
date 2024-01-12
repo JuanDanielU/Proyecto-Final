@@ -7,21 +7,21 @@ exports.createVideo = async (req, res) => {
         video = new Video(req.body);
         // Save video
         await video.save();
-        res.send(video);
+        return res.send(video);
 
     } catch (error) {
         console.log(error);
-        res.status(500).send('Server error');
+        return res.status(500).send('Server error');
     }
 };
 
 exports.getVideos = async (req, res) => {
     try {
         const videos = await Video.find();
-        res.json(videos);
+        return res.json(videos);
     } catch (error) {
         console.log(error);
-        res.status(500).send('Server error');
+        return res.status(500).send('Server error');
     }
 };
 
@@ -31,10 +31,23 @@ exports.getVideo = async (req, res) => {
         if (!video) {
             res.status(404).json({ msg: 'Video not found' });
         }
-        res.json(video);
+        return res.json(video);
     } catch (error) {
         console.log(error);
-        res.status(500).send('Server error');
+        return res.status(500).send('Server error');
+    }
+};
+
+exports.getLikedVideos = async (req, res) => {
+    try {
+        const videos = await Video.find({ likes: req.params.id });
+        if (!videos) {
+            res.status(404).json({ msg: 'Videos not found' });
+        }
+        return res.json(videos);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send('Server error');
     }
 };
 
@@ -43,7 +56,7 @@ exports.updateVideo = async (req, res) => {
         const { title, description, uploadDate, views, likes, comments,userId, fromUser, url } = req.body;
         let video = await Video.findById(req.params.id);
         if (!video) {
-            res.status(404).json({ msg: 'Video not found' });
+            return res.status(404).json({ msg: 'Video not found' });
         }
 
         video.title = title;
@@ -58,11 +71,11 @@ exports.updateVideo = async (req, res) => {
         video.url = url;
 
         video = await Video.findOneAndUpdate({ _id: req.params.id }, video, { new: true });
-        res.json(video);
+        return res.json(video);
 
     } catch (error) {
         console.log(error);
-        res.status(500).send('Server error');
+        return res.status(500).send('Server error');
     }
 };
 
@@ -70,12 +83,12 @@ exports.deleteVideo = async (req, res) => {
     try {
         let video = await Video.findById(req.params.id);
         if (!video) {
-            res.status(404).json({ msg: 'Video not found' });
+            return res.status(404).json({ msg: 'Video not found' });
         }
         await Video.deleteOne({ _id: req.params.id });
-        res.json({ msg: 'Video deleted' });
+        return res.json({ msg: 'Video deleted' });
     } catch (error) {
         console.log(error);
-        res.status(500).send('Server error');
+        return res.status(500).send('Server error');
     }
 };
