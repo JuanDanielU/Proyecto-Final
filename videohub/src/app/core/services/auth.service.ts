@@ -31,22 +31,6 @@ export class AuthService {
     return this.auth.currentUser?.uid ?? '';
   }
 
-  signUpWithEmailAndPassword(credential: Credential): Promise<UserCredential> {
-    return createUserWithEmailAndPassword(
-      this.auth,
-      credential.email,
-      credential.password
-    );
-  }
-
-  logInWithEmailAndPassword(credential: Credential) {
-    return signInWithEmailAndPassword(
-      this.auth,
-      credential.email,
-      credential.password
-    );
-  }
-
   // providers
   signInWithGoogleProvider(): Promise<UserCredential> {
     const provider = new GoogleAuthProvider();
