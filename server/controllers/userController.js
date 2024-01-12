@@ -38,6 +38,19 @@ exports.getUser = async (req, res) => {
     }
 };
 
+exports.getSubscribedUsers = async (req, res) => {
+    try {
+        const users = await User.find({ subscribers: req.params.id });
+        if (!users) {
+            return res.status(404).json({ msg: 'Users not found' });
+        }
+        return res.json(users);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send('Server error');
+    }
+};
+
 exports.updateUser = async (req, res) => {
     try {
         let user = await User.findById(req.params.id);

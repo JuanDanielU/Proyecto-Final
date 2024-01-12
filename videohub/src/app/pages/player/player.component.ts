@@ -40,4 +40,15 @@ export class PlayerComponent {
       }
     );
   }
+
+  async likeVideo() {
+    return this._videoService.getVideo(this.videoId).subscribe(
+      (data) => {
+        this.video = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 }

@@ -21,6 +21,11 @@ const UserSchema = mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
+    subscribers: {
+        type: Array,
+        default: [],
+    
+    },
     updatedAt: {
         type: Date,
         default: null,

@@ -23,6 +23,7 @@
           Choose video: {{ videoName ? video.name : ' No video selected'}}
           <label #labelRef for="fileInput" class="mat-button"></label>
         </button>
+        <span [style.display]="videoSelected ? 'none' : ''" class="videoNoSelected">No video selected!!</span>
         <br />
         <input id="fileInput" aria-label="Choose" type="file" (change)="chooseVideo($event)" class="inputfilechooser" />
         <div class="videoThumbnails">
@@ -31,7 +32,7 @@
         <br [style.display]="hide ? 'none' : '' " />
         <p [style.display]="disabled ? '' : 'none'"> {{progress}}% uploaded</p>
         <mat-progress-bar [style.display]="disabled ? '' : 'none'" color="accent" mode="determinate" [value]="progress"></mat-progress-bar>
-        <button class="uploadButton" type="submit" [disabled]="disabled" mat-raised-button>Upload</button>
+        <button class="uploadButton" [style.display]="hideUploadButton ? 'none' : ''" type="submit" mat-raised-button>Upload</button>
       </div>
     </form>
   </div>

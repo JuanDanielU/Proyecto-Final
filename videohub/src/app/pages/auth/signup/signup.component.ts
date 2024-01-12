@@ -108,6 +108,7 @@ export class SignupComponent {
           _id: result.user.uid,
           name: this.form.value.name + ' ' + this.form.value.lastName!,
           email: result.user.email!,
+          subscribers: [],
           createdAt: new Date(result.user.metadata.creationTime!),
           updatedAt: null,
           photoURL: result.user.photoURL,

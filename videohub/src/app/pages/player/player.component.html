@@ -8,7 +8,14 @@
       alt="Reproductor de video"
     ></video>
   </div>
-  <span class="video-title">{{ video.title }}</span>
+
+  <div class="video-info">
+    <span class="video-title">{{ video.title }}</span>
+    <button mat-icon-button matTooltip="Basic" aria-label="like button" class="video-like">
+      <mat-icon>thumb_up_outlined</mat-icon>
+    </button>
+  </div>
+
   <div class="user-info">
     <img class="video-user-image" [src]="userPhoto" alt="Imagen de usuario" />
     <span class="video-user-name">{{ userName }}</span>
