@@ -1,6 +1,6 @@
 video {
-  height: 630px;
-  width: 1120px;
+  min-height: 250px;
+  min-width: 450px;
   border-radius: 10px;
   background-color: black;
 }
@@ -17,7 +17,6 @@ video {
 
 .video-container {
   display: flex;
-  width: 1120px;
   flex-direction: column;
   margin-top: 1rem;
   margin-left: 3rem;
