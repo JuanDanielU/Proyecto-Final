@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { User } from './models/user';
+import { UserService } from './core/services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -30,20 +32,20 @@ export class AppComponent {
   logged = false;
 
   private _router = inject(Router);
-
-  private authservice = inject(AuthService);
+  private _userService = inject(UserService);
+  private _authservice = inject(AuthService);
 
   gotoHome(): void {
     this._router.navigateByUrl('/home');
   }
 
   ngOnInit() {
-    this.authservice.authState$.subscribe((user) => {
+    this._authservice.authState$.subscribe((user) => {
       if (user) {
-        this.logged = true;
+        return this.logged = true;
       }
       else{
-        this.logged = false;
+        return this.logged = false;
       }
     });
   }
@@ -53,12 +55,31 @@ export class AppComponent {
   }
 
   async logIn(): Promise<void> {
-    this.authservice.signInWithGoogleProvider();
+    try {
+      const result = await this._authservice.signInWithGoogleProvider();
+      const dateTimeNow = new Date(Date.now()).toString();
+      const creationTime = new Date(result.user.metadata.creationTime!).toString();
+      if (creationTime === dateTimeNow) {
+        const user: User = {
+          _id: result.user.uid,
+          name: result.user.displayName!,
+          email: result.user.email!,
+          subscribers: [],
+          createdAt: new Date(Date.now()),
+          updatedAt: null,
+          photoURL: result.user.photoURL,
+        };
+        await this._userService.createUser(user).toPromise();
+      }
+      this._router.navigate(['/']);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async logOut(): Promise<void> {
     try {
-      await this.authservice.logOut();
+      await this._authservice.logOut();
       this._router.navigateByUrl('/');
 
     } catch (error) {
