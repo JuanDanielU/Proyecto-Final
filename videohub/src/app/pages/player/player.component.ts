@@ -18,8 +18,6 @@ import { CommonModule } from '@angular/common';
 export class PlayerComponent {
   videoId = '';
   video = {} as Video;
-  userPhoto = '';
-  userName = '';
   Videos: Video[] = [];
   totalVideos = 0;
   currentPage = 1;
@@ -42,8 +40,6 @@ export class PlayerComponent {
         this.Videos = data.filter((video: { _id: string; }) => video._id !== this.videoId);
         this.totalVideos = this.Videos.length;
         this.video = data.find((data: { _id: string; }) => data._id === this.videoId) as Video;
-        this.userPhoto = this.video.userPhoto;
-        this.userName = this.video.fromUser;
         const index = this.Videos.findIndex((video) => video._id === this.videoId);
         if (index !== -1) {
           this.Videos.splice(index, 1);
