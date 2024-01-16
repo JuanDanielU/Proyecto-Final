@@ -1,18 +1,39 @@
 video {
   min-height: 250px;
   min-width: 450px;
+  height: 550px;
+  width: 950px;
   border-radius: 10px;
   background-color: black;
 }
 
-.video-background {
-  width: 1120px;
+.other-video {
+  height: 100px;
+  width: 170px;
+}
+
+.video-item__details {
+  display: flex;
+  margin-top: 5px;
+}
+
+.player {
+  display: flex;
+  flex-direction: row;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(column, minmax(170px, 0.5rem));
+  grid-gap: 0.5rem;
+  padding: 1rem;
 }
 
 .viedo-info {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 1rem;
 }
 
 .video-container {
@@ -31,6 +52,7 @@ video {
   display: flex;
   color: white;
   font-size: 1.5rem;
+  margin-top: 0.5rem;
 }
 
 img {
@@ -40,9 +62,38 @@ img {
   margin-right: 10px;
 }
 
+h3 {
+  margin-bottom: 0%;
+  color: white;
+}
+
+p {
+  font-size: small;
+  color: grey;
+  margin-bottom: 0%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.hand-cursor {
+  cursor: pointer;
+}
+
 .user-info {
   align-items: center;
   display: flex;
+  margin-top: 0.5rem;
+}
+
+mat-paginator {
+  float: right;
+  width: 14rem;
+  background-color: #000000;
+  color: white;
+  border-radius: 10px;
+  margin-top: 20px;
 }
 
 .video-user-name {

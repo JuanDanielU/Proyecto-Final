@@ -1,6 +1,6 @@
 video {
-  height: 225px;
-  width: 380px;
+  height: 325px;
+  width: 485px;
   border-radius: 10px;
   justify-content: center;
   background-color: black;
@@ -12,7 +12,7 @@ video {
 
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1rem));
+  grid-template-columns: repeat(auto-fit, minmax(485px, 2rem));
   grid-gap: 1rem;
   padding: 1rem;
 }

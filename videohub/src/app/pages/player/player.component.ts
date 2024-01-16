@@ -4,11 +4,14 @@ import { VideoService } from '../../core/services/video.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-player',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule],
+  imports: [MatIconModule, MatButtonModule, MatPaginatorModule, CommonModule],
   templateUrl: './player.component.html',
   styleUrl: './player.component.scss',
 })
@@ -17,7 +20,12 @@ export class PlayerComponent {
   video = {} as Video;
   userPhoto = '';
   userName = '';
+  Videos: Video[] = [];
+  totalVideos = 0;
+  currentPage = 1;
+  videosPerPage = 3;
 
+  private _router = inject(Router);
   private router = inject(ActivatedRoute);
   private _videoService = inject(VideoService);
 
@@ -29,11 +37,17 @@ export class PlayerComponent {
   }
 
   async getVideo() {
-    return this._videoService.getVideo(this.videoId).subscribe(
+    return this._videoService.getVideos().subscribe(
       (data) => {
-        this.video = data;
+        this.Videos = data.filter((video: { _id: string; }) => video._id !== this.videoId);
+        this.totalVideos = this.Videos.length;
+        this.video = data.find((data: { _id: string; }) => data._id === this.videoId) as Video;
         this.userPhoto = this.video.userPhoto;
         this.userName = this.video.fromUser;
+        const index = this.Videos.findIndex((video) => video._id === this.videoId);
+        if (index !== -1) {
+          this.Videos.splice(index, 1);
+        }
       },
       (error) => {
         console.log(error);
@@ -50,5 +64,13 @@ export class PlayerComponent {
         console.log(error);
       }
     );
+  }
+
+  redirectToPlayer(videoId: string) {
+    this._router.navigate(['player', videoId]).then(() => { window.location.reload(); })
+  }
+
+  onPageChange(event: any): void {
+    this.currentPage = event.pageIndex + 1;
   }
 }
