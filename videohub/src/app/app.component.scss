@@ -4,6 +4,24 @@
 
 mat-toolbar {
   display: flex;
+  align-items: center;
+  height: 5rem;
+}
+
+mat-label {
+  color: black;
+  font-size: 1.3rem;
+}
+
+mat-form-field {
+  margin-top: 1.4rem;
+  margin-left: auto;
+  width: 50rem;
+}
+
+input {
+  background-color: black;
+  font-size: 1.3rem;
 }
 
 a {

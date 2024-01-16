@@ -3,6 +3,15 @@
   <button title="upload" class="upload" [style.display]="logged ? '' : 'none' " mat-icon-button (click)="gotoUpload()">
     <mat-icon>upload</mat-icon>
   </button>
+
+    <mat-form-field color="primary">
+      <mat-label color="primary">Search</mat-label>
+      <input color="primary" matInput type="search" [(ngModel)]="search">
+      <button matSuffix mat-icon-button aria-label="search" (click)="Search()" >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+
   <div class="SL-buttons">
     <button aria-label="log In" type="button" class="logIn" [style.display]="logged ? 'none' : '' " mat-raised-button color="accent" (click)="logIn()"><mat-icon>person</mat-icon>Login</button>
     <button aria-label="log Out" type="button" class="logOut" [style.display]="logged ? '' : 'none' " mat-raised-button (click)="logOut()"  color="accent"><mat-icon>arrow_forward</mat-icon> Out</button>

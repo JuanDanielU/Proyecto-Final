@@ -10,6 +10,9 @@ import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { User } from './models/user';
 import { UserService } from './core/services/user.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -22,13 +25,15 @@ import { UserService } from './core/services/user.service';
     MatIconModule,
     MatMenuModule,
     HttpClientModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'videohub';
-
+  search: string = '';
   logged = false;
 
   private _router = inject(Router);
@@ -75,6 +80,15 @@ export class AppComponent {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  Search(): void {
+    if (this.search === '') {
+      return;
+    }
+    this._router.navigate(['/search', this.search]).then(() => {
+      window.location.reload();
+    });
   }
 
   async logOut(): Promise<void> {

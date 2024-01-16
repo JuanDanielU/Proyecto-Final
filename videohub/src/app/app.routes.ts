@@ -9,4 +9,5 @@ export const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'upload', canActivate: [authGuard], component: UploadVideoComponent},
   {path: 'player/:id', component: PlayerComponent},
+  {path: 'search/:search', component: HomeComponent},
 ];
