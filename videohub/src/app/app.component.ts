@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule} from '@angular/material/menu';
 import { AuthService } from './core/services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,6 +13,7 @@ import { UserService } from './core/services/user.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './pages/home/home.component';
 
 @Component({
   selector: 'app-root',
@@ -33,12 +34,15 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  search: string = '';
-  logged = false;
 
+  private router = inject(ActivatedRoute);
   private _router = inject(Router);
   private _userService = inject(UserService);
   private _authservice = inject(AuthService);
+
+  search: string = '';
+  searchName: string = '';
+  logged = false;
 
   gotoHome(): void {
     this._router.navigateByUrl('/home');
@@ -87,6 +91,7 @@ export class AppComponent {
       return;
     }
     this._router.navigate(['/search', this.search]).then(() => {
+      this.searchName = this.search;
       window.location.reload();
     });
   }

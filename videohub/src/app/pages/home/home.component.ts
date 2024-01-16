@@ -33,6 +33,12 @@ export class HomeComponent {
     this.getVideos();
   }
 
+  reloadPage() {
+    this._router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this._router.navigate(['/home']);
+    });
+  }
+
   async getVideos() {
     this.Videos = await this._videoService.getVideos().toPromise();
     this.totalVideos = this.Videos.length;
