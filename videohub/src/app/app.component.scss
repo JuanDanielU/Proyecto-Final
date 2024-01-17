@@ -19,6 +19,17 @@ mat-form-field {
   width: 50rem;
 }
 
+.user-photo {
+  height: 48px;
+  width: 48px;
+  border-radius: 50px;
+  border: 2px solid black;
+}
+
+.user-photo:hover {
+  cursor: pointer;
+}
+
 input {
   background-color: black;
   font-size: 1.3rem;
@@ -36,6 +47,8 @@ a {
 }
 
 .SL-buttons {
+  display: flex;
+  align-items: center;
   margin-left: auto;
 }
 
@@ -53,7 +66,9 @@ a {
 }
 
 .logOut {
+  display: flex;
   font-weight: bold;
+  align-items: center;
   color: black;
   border: 2px solid black;
   transition: color 0.5s ease, background-color 0.5s ease, border 0.5s ease;

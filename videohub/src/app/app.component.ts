@@ -40,6 +40,7 @@ export class AppComponent {
   private _userService = inject(UserService);
   private _authservice = inject(AuthService);
 
+  userPhoto = '';
   search: string = '';
   searchName: string = '';
   logged = false;
@@ -51,6 +52,7 @@ export class AppComponent {
   ngOnInit() {
     this._authservice.authState$.subscribe((user) => {
       if (user) {
+        this.userPhoto = user.photoURL!;
         return this.logged = true;
       }
       else{
@@ -99,6 +101,8 @@ export class AppComponent {
   likedVideos(): void {
     this._router.navigateByUrl('/liked-videos');
   }
+
+  userVideos(): void {}
 
   async logOut(): Promise<void> {
     try {
