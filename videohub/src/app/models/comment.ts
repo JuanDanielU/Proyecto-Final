@@ -1,4 +1,5 @@
 export class Comment {
+  _id: string;
   text: string;
   userId: string;
   fromUser: string;
@@ -9,6 +10,7 @@ export class Comment {
   likes: any[];
 
   constructor(
+    _id: string,
     text: string,
     userId: string,
     fromUser: string,
@@ -19,6 +21,7 @@ export class Comment {
     likes: any[]
   )
   {
+    this._id = _id;
     this.text = text;
     this.userId = userId;
     this.fromUser = fromUser;

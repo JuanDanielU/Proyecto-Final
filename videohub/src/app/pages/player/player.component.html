@@ -42,6 +42,9 @@
       <div class="comment">
         <img class="comment-user-image" [src]="comment.userPhoto" alt="Imagen de usuario" />
         <div class="comment-info">
+          <button class="delete-comment" (click)="deleteComment(comment._id!)">
+            <mat-icon>delete</mat-icon>
+          </button>
           <span class="comment-user-name">{{ comment.fromUser }}</span>
           <p class="comment-text">{{ comment.text }}</p>
         </div>

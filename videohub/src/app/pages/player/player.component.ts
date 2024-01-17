@@ -14,6 +14,8 @@ import { AuthService } from '../../core/services/auth.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { identity } from 'rxjs';
+import { getuid } from 'process';
 
 interface CommentForm {
   text: FormControl<string>;
@@ -92,6 +94,7 @@ export class PlayerComponent {
       return;
     }
     const newComment: Comment = {
+      _id: '',
       text: this.commentForm.value.text!,
       videoId: this.videoId,
       userId: this.currentUserId,
@@ -134,6 +137,10 @@ export class PlayerComponent {
         console.log(error);
       }
     );
+  }
+
+  deleteComment(commentId: string) {
+
   }
 
   redirectToPlayer(videoId: string) {
