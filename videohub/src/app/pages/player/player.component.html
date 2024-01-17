@@ -17,6 +17,36 @@
       <img class="video-user-image" [src]="video.userPhoto" alt="Imagen de usuario" />
       <span class="video-user-name">{{ video.fromUser }}</span>
     </div>
+
+    <div class="video-description">
+      Description:
+      <p class="description-text">{{ video.description }}</p>
+    </div>
+
+    <h1 class="comment-counter">{{ totalComments }} Comments</h1>
+
+    <div class="comment-form" [style.display]="Logged ? '' : 'none' ">
+      <img class="comment-user-image" [src]="currentUserPhoto" alt="Imagen de usuario" />
+      <form class="comment-form-details" [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="form-field">
+          <mat-label>Add a comment...</mat-label>
+          <textarea class="textarea" formControlName="text" matInput (focus)="disabled = false"></textarea>
+        </mat-form-field>
+        <button [style.display]="disabled ? 'none' : '' " mat-button class="comment-button" type="submit">Comment</button>
+        <button type="button" [style.display]="disabled ? 'none' : '' " mat-button class="cancel-button" (click)="disabled = true">Cancel</button>
+      </form>
+    </div>
+
+    <div class="comments" *ngFor="let comment of Comments | slice:
+    (currentPage - 1) * commentsPerPage : currentCommentPage * commentsPerPage">
+      <div class="comment">
+        <img class="comment-user-image" [src]="comment.userPhoto" alt="Imagen de usuario" />
+        <div class="comment-info">
+          <span class="comment-user-name">{{ comment.fromUser }}</span>
+          <p class="comment-text">{{ comment.text }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="other-videos">

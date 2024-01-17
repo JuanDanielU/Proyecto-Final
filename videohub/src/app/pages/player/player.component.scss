@@ -7,6 +7,79 @@ video {
   background-color: black;
 }
 
+.video-description {
+  color: white;
+  font-size: 1rem;
+  margin-top: 1rem;
+  background-color: #3c3c3c;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+.comment {
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.5rem;
+}
+
+.comment-text {
+  color: white;
+}
+
+.comment-counter {
+  margin-top: 1rem;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: row;
+  width: auto;
+}
+
+.textarea {
+  width: auto;
+}
+
+.comment-form-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-button {
+  font-weight: bold;
+  color: white;
+  border: 2px solid grey;
+  transition: color 0.5s ease, background-color 0.5s ease;
+}
+
+.comment-button:hover {
+  font-weight: bolder;
+  color: black;
+  background-color: var(--green);
+  border: 2px solid var(--green);
+}
+
+.cancel-button {
+  margin-top: 0.5rem;
+  font-weight: bold;
+  color: white;
+  border: 2px solid grey;
+  transition: color 0.5s ease, background-color 0.5s ease;
+}
+
+.cancel-button:hover {
+  font-weight: bolder;
+  color: black;
+  background-color: red;
+  border: 2px solid red;
+}
+
+
+.description-text {
+  margin-top: 0.5rem;
+  color: white;
+}
+
 .other-video {
   height: 100px;
   width: 170px;
@@ -27,6 +100,7 @@ video {
   grid-template-columns: repeat(column, minmax(170px, 0.5rem));
   grid-gap: 0.5rem;
   padding: 1rem;
+  margin-left: 1.5rem;
 }
 
 .viedo-info {

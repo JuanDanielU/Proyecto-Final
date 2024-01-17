@@ -4,8 +4,6 @@ import {
   AuthProvider,
   GoogleAuthProvider,
   UserCredential,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
   authState,
   signInWithPopup,
 } from '@angular/fire/auth';
@@ -29,6 +27,10 @@ export class AuthService {
 
   userId(): string {
     return this.auth.currentUser?.uid ?? '';
+  }
+
+  isLogged(): boolean {
+    return !this.auth.currentUser;
   }
 
   // providers
