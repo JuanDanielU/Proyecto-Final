@@ -11,5 +11,5 @@ export const routes: Routes = [
   {path: 'upload', canActivate: [authGuard], component: UploadVideoComponent},
   {path: 'player/:id', component: PlayerComponent},
   {path: 'search/:search', component: HomeComponent},
-  {path: 'liked-videos/:videos', component: LikedVideosComponent},
+  {path: 'liked-videos', canActivate: [authGuard], component: LikedVideosComponent},
 ];

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Video } from "../../models/video";
+import { Video } from '../../models/video';
 import { VideoService } from '../../core/services/video.service';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -11,7 +11,7 @@ import { AuthService } from '../../core/services/auth.service';
   standalone: true,
   imports: [CommonModule, MatPaginatorModule],
   templateUrl: './liked-videos.component.html',
-  styleUrl: './liked-videos.component.scss'
+  styleUrl: './liked-videos.component.scss',
 })
 export class LikedVideosComponent {
   userId = '';
@@ -25,12 +25,16 @@ export class LikedVideosComponent {
   private _authservice = inject(AuthService);
 
   ngOnInit() {
-    this.userId = this._authservice.userId();
     this.getVideos();
   }
 
   async getVideos() {
-    this.Videos = await this._videoService.getLikedVideos(this.userId).toPromise();
+    this._videoService.getVideos().subscribe((videos) => {
+      this.Videos = videos.filter((video: { likes: string }) =>
+        video.likes.includes(this._authservice.userId())
+      );
+      this.totalVideos = this.Videos.length;
+    });
   }
 
   redirectToPlayer(videoId: string) {

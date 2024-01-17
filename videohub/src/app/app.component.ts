@@ -97,7 +97,7 @@ export class AppComponent {
   }
 
   likedVideos(): void {
-    
+    this._router.navigateByUrl('/liked-videos');
   }
 
   async logOut(): Promise<void> {
