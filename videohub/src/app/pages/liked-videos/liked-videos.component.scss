@@ -1,0 +1,54 @@
+video {
+  height: 325px;
+  width: 485px;
+  border-radius: 10px;
+  justify-content: center;
+  background-color: black;
+}
+
+.hand-cursor {
+  cursor: pointer;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(485px, 2rem));
+  grid-gap: 1rem;
+  padding: 1rem;
+}
+
+.video-item__details {
+  display: flex;
+  margin-top: 5px;
+}
+
+h3 {
+  margin-bottom: 0%;
+  color: white;
+}
+
+p {
+  font-size: small;
+  color: grey;
+  margin-bottom: 0%;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  height: 36px;
+  width: 36px;
+  border-radius: 50px;
+  margin-right: 10px;
+}
+
+mat-paginator {
+  float: right;
+  width: 14rem;
+  background-color: #000000;
+  color: white;
+  border-radius: 10px;
+  margin-top: 20px;
+}

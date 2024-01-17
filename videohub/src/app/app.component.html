@@ -1,6 +1,6 @@
 <mat-toolbar color="accent">
   <a href="">VideoHub</a>
-  <button title="upload" class="upload" [style.display]="logged ? '' : 'none' " mat-icon-button (click)="gotoUpload()">
+  <button title="Upload video" class="upload" [style.display]="logged ? '' : 'none' " mat-icon-button (click)="gotoUpload()">
     <mat-icon>upload</mat-icon>
   </button>
 
@@ -11,6 +11,10 @@
         <mat-icon>search</mat-icon>
       </button>
     </mat-form-field>
+
+    <button title="Liked videos" class="upload" [style.display]="logged ? '' : 'none' " mat-icon-button (click)="likedVideos()">
+      <mat-icon>favorite</mat-icon>
+    </button>
 
   <div class="SL-buttons">
     <button aria-label="log In" type="button" class="logIn" [style.display]="logged ? 'none' : '' " mat-raised-button color="accent" (click)="logIn()"><mat-icon>person</mat-icon>Login</button>

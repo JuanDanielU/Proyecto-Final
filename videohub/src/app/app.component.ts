@@ -96,6 +96,10 @@ export class AppComponent {
     });
   }
 
+  likedVideos(): void {
+    
+  }
+
   async logOut(): Promise<void> {
     try {
       await this._authservice.logOut();
