@@ -69,7 +69,7 @@ exports.deleteComment = async (req, res) => {
         if (!comment) {
             return res.status(404).json({ msg: 'Comment not found' });
         }
-        await Comment.findByIdAndRemove(req.params.id);
+        await Comment.deleteOne({ _id: req.params.id });
         return res.json({ msg: 'Comment removed' });
     } catch (error) {
         console.log(error);

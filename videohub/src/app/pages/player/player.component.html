@@ -1,80 +1,207 @@
-
 <div class="player">
   <div class="video-container">
-      <video
-        controls
-        autoplay
-        name="media"
-        [src]="video.url"
-        alt="Reproductor de video"
-      ></video>
+    <video
+      controls
+      autoplay
+      name="media"
+      [src]="video.url"
+      alt="Reproductor de video"
+    ></video>
 
     <div class="video-info">
       <span class="video-title">{{ video.title }}</span>
+      <div class="video-like-button">
+        <button
+          class="like-button"
+          type="button"
+          mat-icon-button
+          *ngIf="!video.likes.includes(currentUserId)"
+          (click)="addVideoLike()"
+        >
+          <mat-icon class="like-icon">favorite_border</mat-icon>
+        </button>
+        <button
+          class="like-button"
+          type="button"
+          mat-icon-button
+          *ngIf="video.likes.includes(currentUserId)"
+          (click)="deleteVideoLike()"
+        >
+          <mat-icon class="like-icon">favorite</mat-icon>
+        </button>
+        <span class="video-likes">{{ video.likes.length }}</span>
+      </div>
     </div>
 
     <div class="user-info">
-      <img class="video-user-image" [src]="video.userPhoto" alt="Imagen de usuario" />
+      <img
+        class="video-user-image"
+        [src]="video.userPhoto"
+        alt="Imagen de usuario"
+      />
       <span class="video-user-name">{{ video.fromUser }}</span>
     </div>
 
     <div class="video-description">
-      Description:
-      <p class="description-text">{{ video.description }}</p>
+      <strong>Description:</strong>
+      <p class="description-text" id="description">{{ video.description }}</p>
     </div>
 
-    <h1 class="comment-counter">{{ totalComments }} Comments</h1>
+    <div class="comment-options">
+      <h1 class="comment-counter">
+        {{ totalComments }} Comments
+        <button
+          type="button"
+          class="menu"
+          mat-button
+          [matMenuTriggerFor]="menu"
+        >
+          Sort By
+          <mat-icon matSuffix>sort</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="sortBy('top')">Top Comments</button>
+          <button mat-menu-item (click)="sortBy('newest')">Newest</button>
+          <button mat-menu-item (click)="sortBy('oldest')">Oldest</button>
+        </mat-menu>
+      </h1>
+    </div>
 
-    <div class="comment-form" [style.display]="Logged ? '' : 'none' ">
-      <img class="comment-user-image" [src]="currentUserPhoto" alt="Imagen de usuario" />
-      <form class="comment-form-details" [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+    <div class="comment-form" [style.display]="Logged ? '' : 'none'">
+      <img
+        class="comment-user-image"
+        [src]="currentUserPhoto"
+        alt="Imagen de usuario"
+      />
+      <form
+        class="comment-form-details"
+        [formGroup]="commentForm"
+        (ngSubmit)="onSubmit()"
+      >
         <mat-form-field class="form-field">
           <mat-label>Add a comment...</mat-label>
-          <textarea class="textarea" formControlName="text" matInput (focus)="disabled = false"></textarea>
+          <textarea
+            class="textarea"
+            formControlName="text"
+            matInput
+            (focus)="disabled = false"
+          ></textarea>
         </mat-form-field>
-        <button [style.display]="disabled ? 'none' : '' " mat-button class="comment-button" type="submit">Comment</button>
-        <button type="button" [style.display]="disabled ? 'none' : '' " mat-button class="cancel-button" (click)="disabled = true">Cancel</button>
+        <button
+          [style.display]="disabled ? 'none' : ''"
+          mat-button
+          class="comment-button"
+          type="submit"
+        >
+          Comment
+        </button>
+        <button
+          type="button"
+          [style.display]="disabled ? 'none' : ''"
+          mat-button
+          class="cancel-button"
+          (click)="disabled = true"
+        >
+          Cancel
+        </button>
       </form>
     </div>
 
-    <div class="comments" *ngFor="let comment of Comments | slice:
-    (currentPage - 1) * commentsPerPage : currentCommentPage * commentsPerPage">
+    <div
+      class="comments"
+      *ngFor="
+        let comment of Comments
+          | slice
+            : (currentCommentPage - 1) * commentsPerPage
+            : currentCommentPage * commentsPerPage
+      "
+    >
       <div class="comment">
-        <img class="comment-user-image" [src]="comment.userPhoto" alt="Imagen de usuario" />
+        <img
+          class="comment-user-image"
+          [src]="comment.userPhoto"
+          alt="Imagen de usuario"
+        />
         <div class="comment-info">
-          <button class="delete-comment" (click)="deleteComment(comment._id!)">
-            <mat-icon>delete</mat-icon>
-          </button>
           <span class="comment-user-name">{{ comment.fromUser }}</span>
           <p class="comment-text">{{ comment.text }}</p>
+          <div class="comment-buttons">
+            <button
+              class="like-button"
+              type="button"
+              mat-icon-button
+              *ngIf="!comment.likes.includes(currentUserId)"
+              (click)="addLike(comment)"
+            >
+              <mat-icon class="like-icon">favorite_border</mat-icon>
+            </button>
+            <button
+              class="like-button"
+              type="button"
+              mat-icon-button
+              *ngIf="comment.likes.includes(currentUserId)"
+              (click)="deleteLike(comment)"
+            >
+              <mat-icon class="like-icon">favorite</mat-icon>
+            </button>
+            <span class="comment-likes">{{ comment.likes.length }}</span>
+            <button
+              class="delete-button"
+              type="button"
+              mat-icon-button
+              *ngIf="currentUserId === comment.userId"
+              (click)="deleteComment(comment._id!)"
+            >
+              <mat-icon class="delete-icon">delete</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
     </div>
+    <mat-paginator
+      araia-label="Select page"
+      [pageIndex]="currentCommentPage - 1"
+      [length]="totalComments"
+      [pageSize]="commentsPerPage"
+      [hidePageSize]="true"
+      (page)="onCommentPageChange($event)"
+    ></mat-paginator>
   </div>
 
   <div class="other-videos">
     <div class="video-grid">
-      <div class="video-item" *ngFor="let video of Videos | slice:
-      (currentPage - 1) * videosPerPage : currentPage * videosPerPage">
+      <div
+        class="video-item"
+        *ngFor="
+          let video of Videos
+            | slice
+              : (currentPage - 1) * videosPerPage
+              : currentPage * videosPerPage
+        "
+      >
         <a (click)="redirectToPlayer(video._id!)" class="hand-cursor">
-            <video class="other-video" [src]="video.url" alt="Miniatura of video"></video>
+          <video
+            class="other-video"
+            [src]="video.url"
+            alt="Miniatura of video"
+          ></video>
           <div class="video-item__details">
-            <img [src]="video.userPhoto" alt="Avatar of user">
+            <img [src]="video.userPhoto" alt="Avatar of user" />
             <div>
-            <h3>{{ video.title }}</h3>
-            <p>{{ video.fromUser }}</p>
+              <h3>{{ video.title }}</h3>
+              <p>{{ video.fromUser }}</p>
             </div>
           </div>
         </a>
       </div>
     </div>
-    <mat-paginator araia-label="Select page"
-    [pageIndex]="currentPage - 1"
-    [length]="totalVideos"
-    [pageSize]="videosPerPage"
-    [hidePageSize]="true"
-    (page)="onPageChange($event)"
+    <mat-paginator
+      araia-label="Select page"
+      [pageIndex]="currentPage - 1"
+      [length]="totalVideos"
+      [pageSize]="videosPerPage"
+      [hidePageSize]="true"
+      (page)="onVideoPageChange($event)"
     ></mat-paginator>
   </div>
-
 </div>

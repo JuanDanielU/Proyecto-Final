@@ -16,24 +16,73 @@ video {
   padding: 0.5rem;
 }
 
+.video-like-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.video-likes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.description-text {
+  margin-top: 0.5rem;
+  color: white;
+}
+
+.show-more-button {
+  height: 2rem;
+  width: 7rem;
+  font-size: 0.9rem;
+}
+
+.menu {
+  margin-left: 0.5rem;
+}
+
+.coment-options {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+}
+
+.comment-counter {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+}
+
 .comment {
   display: flex;
   flex-direction: row;
-  margin-top: 0.5rem;
+  align-items: center;
 }
 
 .comment-text {
   color: white;
-}
-
-.comment-counter {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .comment-form {
   display: flex;
   flex-direction: row;
   width: auto;
+}
+.comment-likes {
+  margin-right: 0.5rem;
+}
+
+.comment-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.comment-info {
+  align-items: center;
 }
 
 .textarea {
@@ -74,12 +123,6 @@ video {
   border: 2px solid red;
 }
 
-
-.description-text {
-  margin-top: 0.5rem;
-  color: white;
-}
-
 .other-video {
   height: 100px;
   width: 170px;
@@ -103,11 +146,11 @@ video {
   margin-left: 1.5rem;
 }
 
-.viedo-info {
+.video-info {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  margin-top: 1rem;
+  justify-content: space-between;
 }
 
 .video-container {
@@ -126,10 +169,11 @@ video {
   display: flex;
   color: white;
   font-size: 1.5rem;
-  margin-top: 0.5rem;
 }
 
 img {
+  display: flex;
+  align-self: start;
   height: 36px;
   width: 36px;
   border-radius: 50px;
@@ -142,7 +186,7 @@ h3 {
 }
 
 p {
-  font-size: small;
+  font-size: 1rem;
   color: grey;
   margin-bottom: 0%;
 }

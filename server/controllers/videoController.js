@@ -53,7 +53,7 @@ exports.getLikedVideos = async (req, res) => {
 
 exports.updateVideo = async (req, res) => {
     try {
-        const { title, description, uploadDate, views, likes, comments,userId, fromUser, url } = req.body;
+        const { title, description, uploadDate, views, likes, comments, userPhoto, userId, fromUser, url } = req.body;
         let video = await Video.findById(req.params.id);
         if (!video) {
             return res.status(404).json({ msg: 'Video not found' });
