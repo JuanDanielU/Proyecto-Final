@@ -102,7 +102,9 @@ export class AppComponent {
     this._router.navigateByUrl('/liked-videos');
   }
 
-  userVideos(): void {}
+  userVideos(): void {
+    this._router.navigate(['/user-videos', this._authservice.userId()]);
+  }
 
   async logOut(): Promise<void> {
     try {

@@ -23,10 +23,6 @@ export class VideoService {
     return this.http.get(this.url + id);
   }
 
-  getLikedVideos(userId: string): Observable<any> {
-    return this.http.get(this.url + userId);
-  }
-
   updateVideo(id: string, video: Video): Observable<any> {
     return this.http.put(this.url + id, video);
   }
