@@ -7,11 +7,18 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MatPaginatorModule, MatIconModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+  ],
   templateUrl: './user-videos.component.html',
   styleUrl: './user-videos.component.scss',
 })
@@ -45,6 +52,22 @@ export class UserVideosComponent {
     if (confirmDelete) {
       this._videoService.deleteVideo(videoId).subscribe(() => {
         this.getVideos();
+      });
+    }
+  }
+
+  sortBy(sort: string) {
+    if (sort === 'newest') {
+      this.Videos.sort((a, b) => {
+        return <any>new Date(b.uploadedAt) - <any>new Date(a.uploadedAt);
+      });
+    } else if (sort === 'oldest') {
+      this.Videos.sort((a, b) => {
+        return <any>new Date(a.uploadedAt) - <any>new Date(b.uploadedAt);
+      });
+    } else if (sort === 'top') {
+      this.Videos.sort((a, b) => {
+        return b.likes.length - a.likes.length;
       });
     }
   }
