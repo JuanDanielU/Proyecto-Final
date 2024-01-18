@@ -1,3 +1,18 @@
+<button
+          type="button"
+          class="menu"
+          mat-button
+          [matMenuTriggerFor]="menu"
+        >
+          Sort By
+          <mat-icon matSuffix>sort</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="sortBy('top')">Top videos</button>
+          <button mat-menu-item (click)="sortBy('newest')">Newest</button>
+          <button mat-menu-item (click)="sortBy('oldest')">Oldest</button>
+        </mat-menu>
+
 <div class="video-grid">
   <div class="video-item" *ngFor="let video of Videos | slice:
   (currentPage - 1) * videosPerPage : currentPage * videosPerPage">

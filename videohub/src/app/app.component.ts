@@ -13,7 +13,6 @@ import { UserService } from './core/services/user.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { HomeComponent } from './pages/home/home.component';
 
 @Component({
   selector: 'app-root',
@@ -35,11 +34,11 @@ import { HomeComponent } from './pages/home/home.component';
 })
 export class AppComponent {
 
-  private router = inject(ActivatedRoute);
   private _router = inject(Router);
   private _userService = inject(UserService);
   private _authservice = inject(AuthService);
 
+  clear = false;
   userPhoto = '';
   search: string = '';
   searchName: string = '';
@@ -86,6 +85,11 @@ export class AppComponent {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  ClearSearch(): void {
+    this.search = '';
+    this.clear = false;
   }
 
   Search(): void {

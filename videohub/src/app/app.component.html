@@ -1,24 +1,69 @@
 <mat-toolbar color="accent">
   <a href="">VideoHub</a>
-  <button title="Upload video" class="upload" [style.display]="logged ? '' : 'none' " mat-icon-button (click)="gotoUpload()">
+  <button
+    title="Upload video"
+    class="upload"
+    [style.display]="logged ? '' : 'none'"
+    mat-icon-button
+    (click)="gotoUpload()"
+  >
     <mat-icon>upload</mat-icon>
   </button>
 
-    <mat-form-field color="primary">
-      <mat-label color="primary">Search</mat-label>
-      <input color="primary" matInput type="search" [(ngModel)]="search">
-      <button matSuffix mat-icon-button aria-label="search" (click)="Search()" >
-        <mat-icon>search</mat-icon>
-      </button>
-    </mat-form-field>
-
-    <button title="Liked videos" class="upload" [style.display]="logged ? '' : 'none' " mat-icon-button (click)="likedVideos()">
-      <mat-icon>favorite</mat-icon>
+  <mat-form-field class="search-bar" color="primary">
+    <mat-label color="primary">Search</mat-label>
+    <input
+      color="primary"
+      (keyup.enter)="Search()"
+      matInput
+      (focus)="clear = true"
+      (focusout)="clear = false"
+      type="input"
+      [(ngModel)]="search"
+    />
+    <button
+      matSuffix
+      mat-icon-button
+      aria-label="clear"
+      [style.display]="clear ? '' : 'none'"
+      (click)="ClearSearch()"
+    >
+      <mat-icon>clear</mat-icon>
     </button>
+    <button matSuffix mat-icon-button aria-label="search" (click)="Search()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <button
+    title="Liked videos"
+    class="upload"
+    [style.display]="logged ? '' : 'none'"
+    mat-icon-button
+    (click)="likedVideos()"
+  >
+    <mat-icon>favorite</mat-icon>
+  </button>
 
   <div class="SL-buttons">
-    <button aria-label="log In" type="button" class="logIn" [style.display]="logged ? 'none' : '' " mat-raised-button color="accent" (click)="logIn()"><mat-icon>person</mat-icon>Login</button>
-    <img class="user-photo" [matMenuTriggerFor]="menu" [style.display]="logged ? '' : 'none' " [src]="userPhoto" alt="Avatar of user">
+    <button
+      aria-label="log In"
+      type="button"
+      class="logIn"
+      [style.display]="logged ? 'none' : ''"
+      mat-raised-button
+      color="accent"
+      (click)="logIn()"
+    >
+      <mat-icon>person</mat-icon>Login
+    </button>
+    <img
+      class="user-photo"
+      [matMenuTriggerFor]="menu"
+      [style.display]="logged ? '' : 'none'"
+      [src]="userPhoto"
+      alt="Avatar of user"
+    />
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="userVideos()">Your videos</button>
       <button mat-menu-item (click)="logOut()">Log Out</button>
