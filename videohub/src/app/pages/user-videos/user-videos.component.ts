@@ -4,18 +4,19 @@ import { VideoService } from '../../core/services/video.service';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { AuthService } from '../../core/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MatPaginatorModule],
+  imports: [CommonModule, MatPaginatorModule, MatIconModule, MatButtonModule],
   templateUrl: './user-videos.component.html',
   styleUrl: './user-videos.component.scss',
 })
 export class UserVideosComponent {
-  userId = '';
+  userId = <any>'';
   Videos: Video[] = [];
   totalVideos = 0;
   currentPage = 1;
@@ -24,10 +25,9 @@ export class UserVideosComponent {
   private router = inject(ActivatedRoute);
   private _router = inject(Router);
   private _videoService = inject(VideoService);
-  private _authservice = inject(AuthService);
 
   ngOnInit() {
-    this.userId = this.router.snapshot.paramMap.get('id')!;
+    this.userId = this.router.snapshot.paramMap.get('id');
     this.getVideos();
   }
 
@@ -38,6 +38,15 @@ export class UserVideosComponent {
       });
       this.totalVideos = this.Videos.length;
     });
+  }
+
+  async deleteVideo(videoId: string) {
+    const confirmDelete = confirm('Are you sure you want to delete this video?');
+    if (confirmDelete) {
+      this._videoService.deleteVideo(videoId).subscribe(() => {
+        this.getVideos();
+      });
+    }
   }
 
   redirectToPlayer(videoId: string) {
