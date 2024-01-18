@@ -89,7 +89,6 @@ export class AppComponent {
 
   ClearSearch(): void {
     this.search = '';
-    this.clear = false;
   }
 
   Search(): void {

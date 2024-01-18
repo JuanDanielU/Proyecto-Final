@@ -16,20 +16,9 @@
       color="primary"
       (keyup.enter)="Search()"
       matInput
-      (focus)="clear = true"
-      (focusout)="clear = false"
-      type="input"
+      type="search"
       [(ngModel)]="search"
     />
-    <button
-      matSuffix
-      mat-icon-button
-      aria-label="clear"
-      [style.display]="clear ? '' : 'none'"
-      (click)="ClearSearch()"
-    >
-      <mat-icon>clear</mat-icon>
-    </button>
     <button matSuffix mat-icon-button aria-label="search" (click)="Search()">
       <mat-icon>search</mat-icon>
     </button>
